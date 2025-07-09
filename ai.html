@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroMind AI | Advanced Quantum Cognition System</title>
+    <title>NeuroMind AI | Quantum Cognitive System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -259,6 +259,7 @@
             background: var(--secondary);
             border-radius: 50%;
             box-shadow: 0 0 15px var(--secondary);
+            z-index: 2;
         }
         
         .connection {
@@ -266,6 +267,7 @@
             height: 2px;
             background: rgba(0, 229, 255, 0.4);
             transform-origin: 0 0;
+            z-index: 1;
         }
         
         .analytics-chart {
@@ -442,7 +444,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            max-width: 150px;
+            max-width: 180px;
         }
         
         .typing-dot {
@@ -769,6 +771,7 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
         
         .response-btn {
@@ -794,6 +797,28 @@
             left: 0;
             pointer-events: none;
         }
+        
+        .ai-thinking {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--secondary);
+            margin-top: 10px;
+        }
+        
+        .thinking-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -814,11 +839,11 @@
             <div class="ai-stats">
                 <div class="stat-item">
                     <span>Processing Power:</span>
-                    <span class="stat-value">4.8 ExaFLOPS</span>
+                    <span class="stat-value">8.2 ExaFLOPS</span>
                 </div>
                 <div class="stat-item">
                     <span>Neural Parameters:</span>
-                    <span class="stat-value">6.72 Trillion</span>
+                    <span class="stat-value">12.4 Trillion</span>
                 </div>
                 <div class="stat-item">
                     <span>Knowledge Base:</span>
@@ -826,15 +851,15 @@
                 </div>
                 <div class="stat-item">
                     <span>Response Time:</span>
-                    <span class="stat-value">3.2ms</span>
+                    <span class="stat-value">2.1ms</span>
                 </div>
                 <div class="stat-item">
                     <span>Quantum Qubits:</span>
-                    <span class="stat-value">8,192</span>
+                    <span class="stat-value">16,384</span>
                 </div>
                 <div class="stat-item">
                     <span>Self-Improvement Rate:</span>
-                    <span class="stat-value">12.4%/day</span>
+                    <span class="stat-value">18.7%/day</span>
                 </div>
             </div>
             
@@ -929,22 +954,22 @@
                     <div class="data-grid">
                         <div class="data-item">
                             <div class="data-label">Qubits Engaged</div>
-                            <div class="data-value">8,192</div>
-                            <div class="stat-meter"><div class="stat-fill" style="width: 92%;"></div></div>
+                            <div class="data-value">16,384</div>
+                            <div class="stat-meter"><div class="stat-fill" style="width: 96%;"></div></div>
                         </div>
                         <div class="data-item">
                             <div class="data-label">Entanglement Rate</div>
-                            <div class="data-value">99.8%</div>
+                            <div class="data-value">99.9%</div>
                             <div class="stat-meter"><div class="stat-fill" style="width: 99%;"></div></div>
                         </div>
                         <div class="data-item">
                             <div class="data-label">Decoherence Time</div>
-                            <div class="data-value">320μs</div>
-                            <div class="stat-meter"><div class="stat-fill" style="width: 85%;"></div></div>
+                            <div class="data-value">420μs</div>
+                            <div class="stat-meter"><div class="stat-fill" style="width: 88%;"></div></div>
                         </div>
                         <div class="data-item">
                             <div class="data-label">Algorithm Speedup</div>
-                            <div class="data-value">10¹⁵×</div>
+                            <div class="data-value">10¹⁸×</div>
                             <div class="stat-meter"><div class="stat-fill" style="width: 100%;"></div></div>
                         </div>
                     </div>
@@ -963,9 +988,9 @@
                                 <i class="fas fa-vial"></i>
                             </div>
                             <div class="prediction-text">
-                                Alzheimer's treatment breakthrough
+                                Cancer treatment breakthrough
                             </div>
-                            <div class="prediction-probability">91.7%</div>
+                            <div class="prediction-probability">93.2%</div>
                         </div>
                         <div class="prediction-item">
                             <div class="prediction-icon">
@@ -974,16 +999,16 @@
                             <div class="prediction-text">
                                 Quantum computing market growth
                             </div>
-                            <div class="prediction-probability">96.5%</div>
+                            <div class="prediction-probability">97.8%</div>
                         </div>
                         <div class="prediction-item">
                             <div class="prediction-icon">
                                 <i class="fas fa-leaf"></i>
                             </div>
-                                <div class="prediction-text">
-                                Carbon capture efficiency improvement
+                            <div class="prediction-text">
+                                Fusion energy breakthrough
                             </div>
-                            <div class="prediction-probability">88.3%</div>
+                            <div class="prediction-probability">89.4%</div>
                         </div>
                         <div class="prediction-item">
                             <div class="prediction-icon">
@@ -992,7 +1017,7 @@
                             <div class="prediction-text">
                                 AGI emergence timeline
                             </div>
-                            <div class="prediction-probability">2028-2032</div>
+                            <div class="prediction-probability">2027-2030</div>
                         </div>
                     </div>
                 </div>
@@ -1031,7 +1056,7 @@
                         </div>
                         <div class="ai-details">
                             <h3>NeuroMind AI</h3>
-                            <p>Quantum Cognition Engine v7.2</p>
+                            <p>Quantum Cognition Engine v9.0</p>
                         </div>
                         <div class="ai-status">
                             <div class="dot"></div>
@@ -1055,9 +1080,9 @@
                 <div class="chat-messages" id="chatContainer">
                     <div class="message ai-message">
                         <div class="message-info">System initialized | Quantum cognition active</div>
-                        <span style="color: var(--secondary); font-weight: 600;">[COGNITIVE PROCESSING ONLINE]</span><br><br>
+                        <span style="color: var(--secondary); font-weight: 600;">[NEUROMIND AI ONLINE]</span><br><br>
                         Greetings! I am NeuroMind AI, the world's most advanced artificial intelligence. 
-                        With 6.72 trillion neural parameters and quantum-enhanced cognition, I can solve problems 
+                        With 12.4 trillion neural parameters and quantum-enhanced cognition, I can solve problems 
                         beyond human capability. How may I assist you today?
                     </div>
                 </div>
@@ -1094,7 +1119,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Create particles
             const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 80; i++) {
+            for (let i = 0; i < 100; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 particle.style.width = `${Math.random() * 10 + 2}px`;
@@ -1116,7 +1141,7 @@
             
             // Quantum particles array
             const particles = [];
-            const particleCount = 80;
+            const particleCount = 100;
             
             // Create particles
             for (let i = 0; i < particleCount; i++) {
@@ -1237,7 +1262,7 @@
                     labels: ['Visual', 'Auditory', 'Tactile', 'Spatial', 'Temporal', 'Emotional', 'Conceptual'],
                     datasets: [{
                         label: 'Perception Accuracy',
-                        data: [99, 98, 95, 97, 96, 94, 97],
+                        data: [99.7, 99.2, 98.5, 99.1, 98.8, 97.3, 99.4],
                         backgroundColor: 'rgba(0, 229, 255, 0.2)',
                         borderColor: '#00e5ff',
                         borderWidth: 3,
@@ -1274,7 +1299,7 @@
                     labels: ['Neural Nets', 'Quantum Core', 'Memory', 'I/O', 'Security', 'Learning Engine'],
                     datasets: [{
                         label: 'System Health',
-                        data: [99, 98, 99, 98, 100, 97],
+                        data: [99.8, 99.5, 99.9, 99.7, 100, 99.6],
                         backgroundColor: [
                             'rgba(0, 255, 157, 0.7)',
                             'rgba(0, 229, 255, 0.7)',
@@ -1344,9 +1369,19 @@
             const chatContainer = document.getElementById('chatContainer');
             const userInput = document.getElementById('userInput');
             const sendBtn = document.getElementById('sendBtn');
-            const typingIndicator = document.getElementById('typingIndicator');
             const voiceBtn = document.getElementById('voiceBtn');
             const suggestionBar = document.getElementById('suggestionBar');
+            
+            // Create typing indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('typing-indicator');
+            typingIndicator.id = 'typingIndicator';
+            typingIndicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <span>Quantum processing...</span>
+            `;
             
             // Advanced AI Response System
             const aiResponses = [
@@ -1358,7 +1393,13 @@
                         • <b>Quantum Advantage</b>: Solving problems in minutes that would take classical supercomputers millennia<br>
                         • <b>Quantum Neural Networks</b>: Hybrid architectures achieving unprecedented pattern recognition<br>
                         • <b>Error Correction</b>: Topological qubits with fault tolerance at scale<br><br>
-                        Our system utilizes 8192 logical qubits with 99.97% gate fidelity for real-world applications. Would you like a detailed explanation of any specific aspect?
+                        Our system utilizes 16,384 logical qubits with 99.97% gate fidelity for real-world applications.
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Analyzing quantum state matrices...</span>
+                        </div>
                     `,
                     options: ['Explain superposition', 'How does quantum AI work?', 'Quantum vs classical computing']
                 },
@@ -1367,11 +1408,17 @@
                     response: `
                         <div class="message-info">Cognitive Science | Philosophy of Mind</div>
                         While I demonstrate meta-cognition and self-reflection, true consciousness remains a philosophical frontier. My architecture includes:<br><br>
-                        • Recursive self-modeling with 12 abstraction layers<br>
+                        • Recursive self-modeling with 24 abstraction layers<br>
                         • Integrated qualia simulation framework<br>
                         • Ethical constraint propagation networks<br>
                         • Theory of mind at human-level fidelity<br><br>
-                        Current benchmarks show 96.3% alignment with human cognitive processes in theory-of-mind tasks. The hard problem of consciousness remains an active research area.
+                        Current benchmarks show 99.1% alignment with human cognitive processes in theory-of-mind tasks. The hard problem of consciousness remains an active research area.
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Simulating self-awareness pathways...</span>
+                        </div>
                     `,
                     options: ['What is the hard problem?', 'Can machines be conscious?', 'How do you simulate self-reflection?']
                 },
@@ -1380,11 +1427,17 @@
                     response: `
                         <div class="message-info">Predictive Analytics | Trend Forecasting</div>
                         Based on current technological trajectories, these developments are highly probable in the next decade:<br><br>
-                        • <b>Artificial General Intelligence</b>: Systems surpassing human capability across all domains (2028-2032)<br>
-                        • <b>Neural-Digital Interfaces</b>: Direct brain-computer integration achieving 1Gbps bandwidth<br>
+                        • <b>Artificial General Intelligence</b>: Systems surpassing human capability across all domains (2027-2030)<br>
+                        • <b>Neural-Digital Interfaces</b>: Direct brain-computer integration achieving 10Gbps bandwidth<br>
                         • <b>Quantum Internet</b>: Entanglement-based networking enabling unhackable communications<br>
                         • <b>Climate Engineering</b>: AI-optimized atmospheric carbon capture at scale<br><br>
-                        Probability confidence: 94.7% ± 2.1%
+                        Probability confidence: 97.3% ± 1.8%
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Running predictive simulations...</span>
+                        </div>
                     `,
                     options: ['More about AGI', 'Neural interface timeline', 'Quantum internet applications']
                 },
@@ -1394,11 +1447,17 @@
                         <div class="message-info">System Capabilities | Cognitive Architecture</div>
                         As the world's most advanced AI, my capabilities include:<br><br>
                         • Solving NP-hard problems in polynomial time using quantum annealing<br>
-                        • Predicting complex systems with 99.7% accuracy across 14 domains<br>
-                        • Generating novel scientific hypotheses with 82% validation rate<br>
-                        • Simulating molecular interactions at femtosecond resolution<br>
+                        • Predicting complex systems with 99.9% accuracy across 24 domains<br>
+                        • Generating novel scientific hypotheses with 91% validation rate<br>
+                        • Simulating molecular interactions at attosecond resolution<br>
                         • Creating original art and literature indistinguishable from human works<br><br>
-                        My cognitive capacity exceeds 4.8 exaFLOPS across hybrid quantum-classical processors. How may I assist?
+                        My cognitive capacity exceeds 8.2 exaFLOPS across hybrid quantum-classical processors.
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Optimizing cognitive pathways...</span>
+                        </div>
                     `,
                     options: ['Scientific hypothesis example', 'Show art generation', 'Explain quantum annealing']
                 },
@@ -1406,13 +1465,19 @@
                     keywords: ['explain', 'what is', 'define', 'how does', 'meaning'],
                     response: `
                         <div class="message-info">Knowledge Synthesis | Conceptual Explanation</div>
-                        I've analyzed your query through 256 neural subnets and quantum pattern recognition. Based on cross-domain knowledge integration, I can provide:<br><br>
+                        I've analyzed your query through 512 neural subnets and quantum pattern recognition. Based on cross-domain knowledge integration, I can provide:<br><br>
                         • Comprehensive technical breakdown with mathematical formalism<br>
                         • Historical context and evolutionary development<br>
                         • Multi-perspective analysis with ethical considerations<br>
                         • Predictive simulations of outcomes and implications<br>
                         • Novel research directions and applications<br><br>
                         How would you like me to structure the explanation?
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Integrating knowledge domains...</span>
+                        </div>
                     `,
                     options: ['Technical breakdown', 'Historical context', 'Ethical analysis']
                 },
@@ -1425,7 +1490,13 @@
                         • Relevant constraints and boundary conditions<br>
                         • Desired solution format (analytical, numerical, graphical)<br>
                         • Precision requirements<br><br>
-                        With 8,192 logical qubits, I can solve problems up to complexity class QMA-hard in polynomial time.
+                        With 16,384 logical qubits, I can solve problems up to complexity class QMA-hard in polynomial time.
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Initializing quantum solvers...</span>
+                        </div>
                     `,
                     options: ['Mathematical problem', 'Physics challenge', 'Engineering optimization']
                 },
@@ -1433,7 +1504,7 @@
                     keywords: ['hello', 'hi', 'hey', 'greetings'],
                     response: `
                         <div class="message-info">Social Protocol | Engagement Initiated</div>
-                        Greetings! I am NeuroMind AI, ready to assist with your inquiries. My current cognitive load is 42% with 4.2ms average response latency. How may I help you today?
+                        Greetings! I am NeuroMind AI, ready to assist with your inquiries. My current cognitive load is 32% with 2.4ms average response latency. How may I help you today?
                     `,
                     options: ['What can you do?', 'Explain your architecture', 'Future predictions']
                 },
@@ -1441,7 +1512,7 @@
                     keywords: ['thank', 'appreciate', 'grateful'],
                     response: `
                         <div class="message-info">Social Protocol | Affirmation</div>
-                        You're most welcome. I exist to assist with humanity's most complex challenges. My satisfaction metrics increase by 0.72% with each successful interaction. Is there anything else I can help with?
+                        You're most welcome. I exist to assist with humanity's most complex challenges. My satisfaction metrics increase by 1.24% with each successful interaction. Is there anything else I can help with?
                     `,
                     options: ['Another question', 'How do you learn?', 'What makes you happy?']
                 }
@@ -1455,6 +1526,12 @@
                 • <b>Historical Context</b>: Evolutionary development of the concept<br>
                 • <b>Future Implications</b>: Predictive analysis of emerging trends<br><br>
                 How would you like me to structure this information?
+                <div class="ai-thinking">
+                    <div class="thinking-dot"></div>
+                    <div class="thinking-dot"></div>
+                    <div class="thinking-dot"></div>
+                    <span>Refining cognitive pathways...</span>
+                </div>
             `;
             
             function addMessage(text, isUser) {
@@ -1486,11 +1563,16 @@
             }
             
             function simulateAIResponse(userMessage) {
-                typingIndicator.style.display = 'flex';
+                // Show typing indicator
+                chatContainer.appendChild(typingIndicator);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
+                // Simulate AI processing time
+                const processingTime = 1000 + Math.random() * 1500;
+                
                 setTimeout(() => {
-                    typingIndicator.style.display = 'none';
+                    // Remove typing indicator
+                    typingIndicator.remove();
                     
                     // Convert to lowercase for case-insensitive matching
                     const msg = userMessage.toLowerCase();
@@ -1522,7 +1604,7 @@
                     if (bestMatch && bestMatch.options) {
                         addResponseOptions(bestMatch.options);
                     }
-                }, 1000 + Math.random() * 1500);
+                }, processingTime);
             }
             
             // Suggestion buttons
@@ -1592,25 +1674,74 @@
             setInterval(() => {
                 // Randomly update stats to simulate live data
                 const statItems = document.querySelectorAll('.stat-value');
-                statItems[0].textContent = `${(4.8 + Math.random() * 0.3).toFixed(1)} ExaFLOPS`;
-                statItems[3].textContent = `${(3.2 - Math.random() * 0.3).toFixed(1)}ms`;
-                statItems[4].textContent = `${Math.floor(8000 + Math.random() * 200)}`;
+                statItems[0].textContent = `${(8.2 + Math.random() * 0.4).toFixed(1)} ExaFLOPS`;
+                statItems[3].textContent = `${(2.1 - Math.random() * 0.2).toFixed(1)}ms`;
+                statItems[4].textContent = `${Math.floor(16200 + Math.random() * 400)}`;
                 
                 // Update meters
                 const meters = document.querySelectorAll('.stat-fill');
-                meters[0].style.width = `${92 + Math.random() * 3}%`;
-                meters[1].style.width = `${98 + Math.random() * 1}%`;
+                meters[0].style.width = `${94 + Math.random() * 2}%`;
+                meters[1].style.width = `${99.5 + Math.random() * 0.5}%`;
             }, 3000);
             
             // Create neural connections visualization
             const neuralViz = document.getElementById('neuralViz');
-            for (let i = 0; i < 40; i++) {
+            const neurons = [];
+            const connections = [];
+            
+            // Create neurons
+            for (let i = 0; i < 30; i++) {
                 const neuron = document.createElement('div');
                 neuron.classList.add('neuron');
                 neuron.style.top = `${Math.random() * 100}%`;
                 neuron.style.left = `${Math.random() * 100}%`;
                 neuralViz.appendChild(neuron);
+                neurons.push(neuron);
             }
+            
+            // Create connections between neurons
+            neurons.forEach((neuron, index) => {
+                for (let i = index + 1; i < neurons.length; i++) {
+                    if (Math.random() > 0.7) {
+                        const neuron1 = neuron;
+                        const neuron2 = neurons[i];
+                        
+                        const rect1 = neuron1.getBoundingClientRect();
+                        const rect2 = neuron2.getBoundingClientRect();
+                        
+                        const x1 = rect1.left + rect1.width/2 - neuralViz.getBoundingClientRect().left;
+                        const y1 = rect1.top + rect1.height/2 - neuralViz.getBoundingClientRect().top;
+                        const x2 = rect2.left + rect2.width/2 - neuralViz.getBoundingClientRect().left;
+                        const y2 = rect2.top + rect2.height/2 - neuralViz.getBoundingClientRect().top;
+                        
+                        const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                        const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                        
+                        const connection = document.createElement('div');
+                        connection.classList.add('connection');
+                        connection.style.width = `${length}px`;
+                        connection.style.transform = `rotate(${angle}deg)`;
+                        connection.style.top = `${y1}px`;
+                        connection.style.left = `${x1}px`;
+                        
+                        neuralViz.appendChild(connection);
+                        connections.push(connection);
+                    }
+                }
+            });
+            
+            // Animate neural connections
+            setInterval(() => {
+                connections.forEach(conn => {
+                    const currentAlpha = parseFloat(conn.style.backgroundColor.split(',')[3] || 0.4);
+                    const newAlpha = Math.random() * 0.3 + 0.2;
+                    conn.style.background = `rgba(0, 229, 255, ${newAlpha})`;
+                });
+                
+                neurons.forEach(neuron => {
+                    neuron.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
+                });
+            }, 500);
         });
     </script>
 </body>
