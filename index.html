@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineFamily Search Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-medium: #121212;
+            --bg-light: #1a1a1a;
+            --border-color: #333;
+            --text-primary: #ffffff;
+            --text-secondary: #bbbbbb;
+            --accent-color: #ffffff;
+            --accent-hover: #f0f0f0;
+            --result-card-bg: #111;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-medium) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+        
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #bbb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .search-container {
+            background: var(--bg-light);
+            border-radius: 50px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            max-width: 800px;
+            margin: 40px auto 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .search-container:focus-within {
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            border-color: #555;
+        }
+        
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 18px 25px;
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            outline: none;
+        }
+        
+        .search-btn {
+            background: var(--bg-medium);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 5px;
+        }
+        
+        .search-btn:hover {
+            background: #222;
+            transform: scale(1.05);
+        }
+        
+        .search-btn i {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+        }
+        
+        .search-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .search-type {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-type.active, .search-type:hover {
+            background: #222;
+            color: var(--accent-color);
+            border-color: #555;
+        }
+        
+        .search-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto 25px;
+            padding: 0 15px;
+        }
+        
+        .results-stats {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .sort-options select {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .result-card {
+            background: var(--result-card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: #555;
+        }
+        
+        .result-img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a1a, #222);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-size: 3rem;
+            position: relative;
+        }
+        
+        .result-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .result-content {
+            padding: 25px;
+        }
+        
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+        }
+        
+        .result-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .result-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .result-link {
+            color: #4d8eff;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .result-link:hover {
+            text-decoration: underline;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .action-btn {
+            background: var(--bg-medium);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-btn:hover {
+            background: #222;
+            color: var(--accent-color);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 50px 0 30px;
+        }
+        
+        .page-btn {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .page-btn.active, .page-btn:hover {
+            background: #222;
+            color: var(--accent-color);
+            border-color: #555;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .results-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .nav-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .search-container {
+                margin: 30px auto;
+                max-width: 95%;
+            }
+            
+            .search-meta {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-options {
+                gap: 8px;
+            }
+            
+            .search-type {
+                padding: 6px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .logo-text {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-card {
+            animation: fadeIn 0.4s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .result-card:nth-child(1) { animation-delay: 0.1s; }
+        .result-card:nth-child(2) { animation-delay: 0.2s; }
+        .result-card:nth-child(3) { animation-delay: 0.3s; }
+        .result-card:nth-child(4) { animation-delay: 0.4s; }
+        .result-card:nth-child(5) { animation-delay: 0.5s; }
+        .result-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Advanced features */
+        .advanced-search {
+            max-width: 800px;
+            margin: 30px auto;
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+        
+        .advanced-search h3 {
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .advanced-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .option-group label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .option-group input, .option-group select {
+            background: var(--bg-medium);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 15px;
+            border-radius: 8px;
+            outline: none;
+        }
+        
+        .toggle-advanced {
+            display: block;
+            text-align: center;
+            margin: 15px auto 0;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .toggle-advanced:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="logo-text">MineFamily</div>
+            </div>
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-history"></i> History</a>
+                <a href="#"><i class="fas fa-bookmark"></i> Bookmarks</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-user"></i> Account</a>
+            </div>
+        </header>
+        
+        <main>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search the entire web with MineFamily..." id="searchInput">
+                <button class="search-btn" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="search-options">
+                <div class="search-type active"><i class="fas fa-globe"></i> All</div>
+                <div class="search-type"><i class="fas fa-video"></i> Videos</div>
+                <div class="search-type"><i class="fas fa-image"></i> Images</div>
+                <div class="search-type"><i class="fas fa-newspaper"></i> News</div>
+                <div class="search-type"><i class="fas fa-shopping-cart"></i> Shopping</div>
+                <div class="search-type"><i class="fas fa-map"></i> Maps</div>
+                <div class="search-type"><i class="fas fa-ellipsis-h"></i> More</div>
+            </div>
+            
+            <div class="search-meta">
+                <div class="results-stats" id="resultsStats">
+                    About 4,560,000 results (0.38 seconds)
+                </div>
+                <div class="sort-options">
+                    <select id="sortBy">
+                        <option>Sort by relevance</option>
+                        <option>Sort by date</option>
+                        <option>Sort by popularity</option>
+                    </select>
+                    <select id="timeRange">
+                        <option>Any time</option>
+                        <option>Past 24 hours</option>
+                        <option>Past week</option>
+                        <option>Past month</option>
+                        <option>Past year</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="advanced-search" id="advancedSearch">
+                <h3><i class="fas fa-sliders-h"></i> Advanced Search</h3>
+                <div class="advanced-options">
+                    <div class="option-group">
+                        <label>Find pages with...</label>
+                        <input type="text" placeholder="all these words">
+                    </div>
+                    <div class="option-group">
+                        <label>This exact word or phrase:</label>
+                        <input type="text" placeholder="exact phrase">
+                    </div>
+                    <div class="option-group">
+                        <label>Any of these words:</label>
+                        <input type="text" placeholder="OR">
+                    </div>
+                    <div class="option-group">
+                        <label>None of these words:</label>
+                        <input type="text" placeholder="NOT">
+                    </div>
+                    <div class="option-group">
+                        <label>Language:</label>
+                        <select>
+                            <option>Any language</option>
+                            <option>English</option>
+                            <option>Spanish</option>
+                            <option>French</option>
+                            <option>German</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label>Region:</label>
+                        <select>
+                            <option>Any region</option>
+                            <option>United States</option>
+                            <option>United Kingdom</option>
+                            <option>Canada</option>
+                            <option>Australia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="toggle-advanced" id="toggleAdvanced">
+                <i class="fas fa-caret-down"></i> Show Advanced Search
+            </div>
+            
+            <div class="results-container" id="resultsContainer">
+                <!-- Results will be dynamically inserted here -->
+            </div>
+            
+            <div class="pagination">
+                <div class="page-btn active">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn">4</div>
+                <div class="page-btn">5</div>
+                <div class="page-btn">6</div>
+                <div class="page-btn">7</div>
+                <div class="page-btn">8</div>
+                <div class="page-btn">9</div>
+                <div class="page-btn">10</div>
+                <div class="page-btn"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>MineFamily Search Engine © 2023 - Search the entire web securely and privately</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Settings</a>
+                <a href="#">Help</a>
+                <a href="#">Feedback</a>
+                <a href="#">About</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Sample search results data
+        const searchResults = [
+            {
+                title: "The Future of Artificial Intelligence",
+                description: "Discover how AI is transforming industries and what the future holds for this revolutionary technology. Learn about recent breakthroughs and applications.",
+                url: "techinsights.com/future-ai",
+                type: "article",
+                date: "2 days ago",
+                icon: "fa-microchip"
+            },
+            {
+                title: "Space Exploration: Latest Discoveries",
+                description: "NASA's latest mission has uncovered surprising findings on Mars. Scientists reveal evidence of ancient water systems and potential for past microbial life.",
+                url: "spacenews.com/mars-discoveries",
+                type: "news",
+                date: "5 hours ago",
+                icon: "fa-rocket"
+            },
+            {
+                title: "Top 10 Travel Destinations for 2023",
+                description: "From hidden gems to popular hotspots, explore the best places to visit this year. Our comprehensive guide includes budget tips and must-see attractions.",
+                url: "travelworld.com/top-destinations-2023",
+                type: "guide",
+                date: "1 week ago",
+                icon: "fa-map-marked-alt"
+            },
+            {
+                title: "Healthy Eating Made Simple",
+                description: "Nutritionists share easy tips for maintaining a balanced diet. Learn how to prepare quick, healthy meals that fuel your body and mind without sacrificing flavor.",
+                url: "healthyliving.com/nutrition-guide",
+                type: "article",
+                date: "3 days ago",
+                icon: "fa-apple-alt"
+            },
+            {
+                title: "Blockchain Technology Explained",
+                description: "A comprehensive guide to understanding blockchain, cryptocurrencies, and their impact on finance. Learn how this technology is changing the way we transact.",
+                url: "techreview.com/blockchain-explained",
+                type: "educational",
+                date: "4 days ago",
+                icon: "fa-link"
+            },
+            {
+                title: "Sustainable Living Practices",
+                description: "How to reduce your carbon footprint with simple lifestyle changes. Discover eco-friendly alternatives for everyday products and energy-saving techniques.",
+                url: "ecowarrior.com/sustainable-living",
+                type: "guide",
+                date: "1 day ago",
+                icon: "fa-leaf"
+            },
+            {
+                title: "History of Modern Architecture",
+                description: "Explore the evolution of architectural styles from the 20th century to today. Featuring iconic buildings and influential architects who shaped our skylines.",
+                url: "architecturetoday.com/modern-history",
+                type: "educational",
+                date: "2 weeks ago",
+                icon: "fa-building"
+            },
+            {
+                title: "Beginner's Guide to Digital Photography",
+                description: "Learn the fundamentals of photography with our step-by-step guide. Master composition, lighting, and camera settings to capture stunning images.",
+                url: "photographymastery.com/beginners",
+                type: "tutorial",
+                date: "5 days ago",
+                icon: "fa-camera"
+            }
+        ];
+
+        // Icons for different content types
+        const typeIcons = {
+            "article": "fa-newspaper",
+            "news": "fa-bullhorn",
+            "guide": "fa-book-open",
+            "educational": "fa-graduation-cap",
+            "tutorial": "fa-video"
+        };
+
+        // Function to generate result cards
+        function generateResultCards() {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = '';
+            
+            searchResults.forEach(result => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                
+                card.innerHTML = `
+                    <div class="result-img">
+                        <i class="fas ${result.icon}"></i>
+                        <div class="result-badge">
+                            <i class="fas ${typeIcons[result.type] || 'fa-file'}"></i>
+                            ${result.type.charAt(0).toUpperCase() + result.type.slice(1)}
+                        </div>
+                    </div>
+                    <div class="result-content">
+                        <h3 class="result-title">${result.title}</h3>
+                        <p class="result-desc">${result.description}</p>
+                        <div class="result-meta">
+                            <a href="#" class="result-link">
+                                <i class="fas fa-link"></i>
+                                ${result.url}
+                            </a>
+                            <span>${result.date}</span>
+                        </div>
+                        <div class="result-actions">
+                            <button class="action-btn">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-bookmark"></i> Save
+                            </button>
+                            <button class="action-btn">
+                                <i class="fas fa-ellipsis-h"></i> More
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            generateResultCards();
+            
+            // Search functionality
+            const searchBtn = document.getElementById('searchButton');
+            const searchInput = document.getElementById('searchInput');
+            
+            searchBtn.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    document.getElementById('resultsStats').textContent = 
+                        `About ${Math.floor(Math.random() * 9000000) + 1000000} results (0.${Math.floor(Math.random() * 50) + 10} seconds)`;
+                }
+            }
+            
+            // Search type buttons
+            const searchTypes = document.querySelectorAll('.search-type');
+            searchTypes.forEach(type => {
+                type.addEventListener('click', function() {
+                    searchTypes.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Pagination buttons
+            const pageBtns = document.querySelectorAll('.page-btn');
+            pageBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    pageBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Advanced search toggle
+            const toggleAdvanced = document.getElementById('toggleAdvanced');
+            const advancedSearch = document.getElementById('advancedSearch');
+            
+            toggleAdvanced.addEventListener('click', function() {
+                if (advancedSearch.style.display === 'block') {
+                    advancedSearch.style.display = 'none';
+                    toggleAdvanced.innerHTML = '<i class="fas fa-caret-down"></i> Show Advanced Search';
+                } else {
+                    advancedSearch.style.display = 'block';
+                    toggleAdvanced.innerHTML = '<i class="fas fa-caret-up"></i> Hide Advanced Search';
+                }
+            });
+            
+            // Set initial active states
+            document.querySelector('.search-type').classList.add('active');
+            document.querySelector('.page-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>
