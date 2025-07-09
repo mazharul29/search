@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MineFamily - AI-Powered Private Search</title>
+    <title>MineFamily - Advanced AI-Powered Private Search</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Global Styles */
         :root {
-            --primary-bg: #000000;
+            --primary-bg: #0a0a0a;
             --secondary-bg: #121212;
             --tertiary-bg: #1e1e1e;
             --text-primary: #ffffff;
             --text-secondary: #b0b0b0;
-            --accent-color: #ffffff;
+            --accent-color: #6c63ff;
+            --accent-gradient: linear-gradient(135deg, #6c63ff 0%, #4a40e6 100%);
             --border-color: #333333;
             --shadow-color: rgba(255, 255, 255, 0.1);
             --success-color: #28a745;
@@ -22,6 +23,9 @@
             --url-color: #34a853;
             --ai-color: #9d50ff;
             --user-color: #4a8cff;
+            --gpt-color: #10a37f;
+            --assistant-color: #343541;
+            --privacy-indicator: rgba(52, 168, 83, 0.1);
         }
         
         .light-mode {
@@ -31,12 +35,16 @@
             --text-primary: #202124;
             --text-secondary: #5f6368;
             --accent-color: #1a73e8;
+            --accent-gradient: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
             --border-color: #dadce0;
             --shadow-color: rgba(0, 0, 0, 0.1);
             --link-color: #1a73e8;
             --url-color: #0d652d;
             --ai-color: #7b3fe4;
             --user-color: #1a73e8;
+            --gpt-color: #10a37f;
+            --assistant-color: #f7f7f8;
+            --privacy-indicator: rgba(52, 168, 83, 0.08);
         }
         
         * {
@@ -44,7 +52,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, opacity 0.3s;
         }
         
         body {
@@ -53,12 +61,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-image: linear-gradient(45deg, rgba(30,30,30,0.1) 25%, transparent 25%), 
-                              linear-gradient(-45deg, rgba(30,30,30,0.1) 25%, transparent 25%), 
-                              linear-gradient(45deg, transparent 75%, rgba(30,30,30,0.1) 75%), 
-                              linear-gradient(-45deg, transparent 75%, rgba(30,30,30,0.1) 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(30,30,30,0.1) 0%, transparent 20%), 
+                              radial-gradient(circle at 90% 80%, rgba(30,30,30,0.1) 0%, transparent 20%);
+            background-size: 400px 400px;
         }
         
         /* Header Styles */
@@ -85,6 +90,7 @@
         .logo-icon {
             font-size: 1.8rem;
             color: var(--accent-color);
+            animation: pulse 2s infinite;
         }
         
         .logo-text {
@@ -100,20 +106,15 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         
         nav a {
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
             padding: 0.5rem 0;
-        }
-        
-        nav a:hover {
-            color: var(--accent-color);
+            position: relative;
         }
         
         nav a::after {
@@ -123,7 +124,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: var(--accent-color);
+            background: var(--accent-gradient);
             transition: width 0.3s;
         }
         
@@ -133,196 +134,72 @@
         
         .user-actions {
             display: flex;
-            gap: 1rem;
             align-items: center;
+            gap: 1rem;
         }
         
         .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 4px;
-            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
             font-weight: 500;
             cursor: pointer;
+            border: none;
             transition: all 0.3s;
-            background-color: var(--tertiary-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            justify-content: center;
             gap: 0.5rem;
         }
         
-        .btn:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px var(--shadow-color);
-        }
-        
         .btn-primary {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-        }
-        
-        .btn-ai {
-            background-color: var(--ai-color);
+            background: var(--accent-gradient);
             color: white;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
         }
         
-        .btn-primary:hover, .btn-ai:hover {
-            opacity: 0.9;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
         }
         
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--tertiary-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-        
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .user-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            box-shadow: 0 4px 12px var(--shadow-color);
-            padding: 1rem;
-            width: 200px;
-            display: none;
-            z-index: 10;
-        }
-        
-        .user-profile:hover .user-dropdown {
-            display: block;
-        }
-        
-        .user-dropdown a {
-            display: block;
-            padding: 0.5rem 0;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-        
-        .user-dropdown a:hover {
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-color);
             color: var(--accent-color);
         }
         
-        /* Theme Toggle */
+        .btn-outline:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+        
         .theme-toggle {
-            background: none;
+            background: transparent;
             border: none;
             color: var(--text-primary);
+            font-size: 1.2rem;
             cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 10px;
-        }
-        
-        /* Main Content Styles */
-        .container {
-            flex: 1;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
+            justify-content: center;
         }
         
-        .hero {
-            text-align: center;
-            max-width: 700px;
-            margin: 2rem 0 3rem;
-            animation: fadeIn 0.8s ease-out;
+        .theme-toggle:hover {
+            background: var(--tertiary-bg);
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            background: linear-gradient(45deg, var(--accent-color), var(--text-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            line-height: 1.6;
-        }
-        
-        .ai-tag {
-            display: inline-block;
-            background: linear-gradient(45deg, var(--ai-color), #6a11cb);
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(157, 80, 255, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(157, 80, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(157, 80, 255, 0); }
-        }
-        
+        /* Enhanced Search Container */
         .search-container {
             width: 100%;
-            max-width: 700px;
+            max-width: 800px;
             position: relative;
-            margin-bottom: 2rem;
+            margin: 2rem auto;
         }
         
-        .search-box {
-            width: 100%;
-            padding: 1.2rem 1.5rem;
-            padding-left: 3.5rem;
-            font-size: 1.1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            background-color: var(--secondary-bg);
-            color: var(--text-primary);
-            outline: none;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .search-box:focus {
-            box-shadow: 0 0 0 3px var(--accent-color);
+        .search-box-container {
+            position: relative;
+            margin-bottom: 1rem;
         }
         
         .search-icon {
@@ -334,173 +211,100 @@
             font-size: 1.2rem;
         }
         
+        .search-box {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            padding-left: 3.5rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background-color: var(--secondary-bg);
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .search-box:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2);
+        }
+        
         .voice-search {
             position: absolute;
             right: 1.5rem;
             top: 50%;
             transform: translateY(-50%);
-            background: none;
+            background: transparent;
             border: none;
             color: var(--text-secondary);
-            cursor: pointer;
             font-size: 1.2rem;
+            cursor: pointer;
         }
         
-        .voice-search.listening {
-            color: var(--success-color);
-            animation: pulse 1.5s infinite;
-        }
-        
-        .search-btn {
-            padding: 0.8rem 2.5rem;
-            font-size: 1.1rem;
-            margin-top: 1rem;
-            border-radius: 50px;
-            font-weight: 600;
-        }
-        
-        /* Search Type Tabs */
-        .search-types {
+        .search-actions {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin: 1rem 0 2rem;
-            width: 100%;
-            max-width: 700px;
+            margin-top: 1rem;
+        }
+        
+        .search-types {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
         }
         
         .type-btn {
             padding: 0.7rem 1.5rem;
-            background-color: transparent;
+            border-radius: 8px;
+            background-color: var(--secondary-bg);
             border: 1px solid var(--border-color);
-            border-radius: 30px;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
-        .type-btn:hover, .type-btn.active {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
+        .type-btn.active, .type-btn:hover {
+            background: var(--accent-gradient);
+            color: white;
             border-color: var(--accent-color);
         }
         
-        .type-btn.ai-btn {
-            background-color: var(--ai-color);
-            color: white;
-            border-color: var(--ai-color);
-        }
-        
-        /* AI Results */
-        .ai-results {
-            width: 100%;
-            max-width: 800px;
-            margin-top: 2rem;
-            background-color: var(--secondary-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px var(--shadow-color);
-            display: none;
-        }
-        
-        .ai-results-header {
+        /* Privacy Indicator */
+        .privacy-indicator {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .ai-icon {
-            font-size: 1.8rem;
-            color: var(--ai-color);
-        }
-        
-        .ai-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .ai-response {
-            background-color: var(--tertiary-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--ai-color);
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .ai-response-content {
-            color: var(--text-primary);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
-        
-        .ai-response-content p {
-            margin-bottom: 1rem;
-        }
-        
-        .ai-response-content ul {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .ai-response-content li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .ai-follow-up {
-            margin-top: 1.5rem;
-        }
-        
-        .ai-follow-up-title {
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            color: var(--ai-color);
-        }
-        
-        .ai-questions {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: var(--privacy-indicator);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--url-color);
+            border: 1px solid var(--url-color);
         }
         
-        .ai-question {
-            padding: 0.8rem 1.2rem;
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: left;
-        }
-        
-        .ai-question:hover {
-            background-color: var(--ai-color);
-            color: white;
-            border-color: var(--ai-color);
-        }
-        
-        /* Search Results */
+        /* Results Container */
         .results-container {
+            max-width: 800px;
+            margin: 2rem auto;
             width: 100%;
-            max-width: 1200px;
-            margin-top: 1rem;
-            display: none;
+            padding: 0 1rem;
         }
         
         .results-header {
-            margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .result-count {
@@ -508,362 +312,304 @@
             font-size: 0.9rem;
         }
         
-        .filters {
-            display: flex;
-            gap: 0.8rem;
-        }
-        
-        .filter-btn {
-            padding: 0.4rem 0.8rem;
-            background-color: var(--tertiary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        
-        .filter-btn:hover, .filter-btn.active {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            border-color: var(--accent-color);
-        }
-        
-        /* Result Cards */
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
         .result-item {
-            background-color: var(--tertiary-bg);
-            border-radius: 8px;
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
             padding: 1.5rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--border-color);
             transition: all 0.3s;
-            box-shadow: 0 2px 8px var(--shadow-color);
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
         }
         
         .result-item:hover {
             border-color: var(--accent-color);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--shadow-color);
+            box-shadow: 0 8px 20px var(--shadow-color);
         }
         
         .result-title {
             font-size: 1.3rem;
-            font-weight: 600;
             margin-bottom: 0.5rem;
-        }
-        
-        .result-title a {
             color: var(--link-color);
             text-decoration: none;
+            display: block;
         }
         
-        .result-title a:hover {
+        .result-title:hover {
             text-decoration: underline;
         }
         
         .result-url {
             color: var(--url-color);
             font-size: 0.9rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
             display: block;
         }
         
-        .result-snippet {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-        }
-        
-        .result-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 0.8rem;
-            margin-top: 0.8rem;
-        }
-        
-        /* Quick Answer */
-        .quick-answer {
-            background-color: var(--tertiary-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--accent-color);
-        }
-        
-        .quick-answer-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            color: var(--accent-color);
-        }
-        
-        .quick-answer-content {
+        .result-description {
             color: var(--text-secondary);
             line-height: 1.6;
         }
         
-        .quick-answer-source {
-            margin-top: 0.8rem;
-            font-size: 0.9rem;
-            color: var(--url-color);
+        .ai-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent-gradient);
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0 0 0 12px;
         }
         
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .page-btn {
-            padding: 0.5rem 1rem;
-            background-color: var(--tertiary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .page-btn:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-        }
-        
-        .page-btn.active {
-            background-color: var(--accent-color);
-            color: var(--primary-bg);
-            border-color: var(--accent-color);
-        }
-        
-        /* Account Pages */
-        .account-container {
+        /* AI Assistant Panel */
+        .ai-assistant {
             width: 100%;
-            max-width: 500px;
-            margin: 2rem auto;
-            padding: 2.5rem;
+            max-width: 1000px;
             background-color: var(--secondary-bg);
-            border-radius: 12px;
+            border-radius: 16px;
+            overflow: hidden;
             border: 1px solid var(--border-color);
             box-shadow: 0 10px 30px var(--shadow-color);
-            animation: fadeIn 0.6s ease-out;
+            margin: 2rem auto;
+            display: none;
         }
         
-        .account-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--accent-color);
+        .ai-results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            background: var(--accent-gradient);
         }
         
-        .form-group {
-            margin-bottom: 1.5rem;
+        .ai-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-            font-weight: 500;
+        .ai-icon {
+            font-size: 1.8rem;
+            color: white;
         }
         
-        .form-group input {
-            width: 100%;
-            padding: 0.9rem 1.2rem;
+        .ai-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .ai-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .ai-action-btn {
+            padding: 0.5rem 1rem;
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 6px;
-            border: 1px solid var(--border-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .ai-action-btn:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        /* Advanced AI Conversation */
+        .ai-conversation {
+            padding: 2rem;
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            padding: 1.5rem;
+            border-radius: 12px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .user-message {
+            background-color: var(--user-color);
+            color: white;
+            align-self: flex-end;
+            margin-left: 20%;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .ai-message {
+            background-color: var(--assistant-color);
+            margin-right: 20%;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            gap: 0.5rem;
+        }
+        
+        .message-content {
+            line-height: 1.7;
+        }
+        
+        .message-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .message-content ul, .message-content ol {
+            padding-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .message-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .message-content code {
+            background-color: rgba(0,0,0,0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            padding: 1.5rem;
+            background-color: var(--assistant-color);
+            border-radius: 12px;
+            margin-right: 20%;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--text-secondary);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        /* AI Input Area */
+        .ai-input-area {
+            padding: 1.5rem 2rem;
             background-color: var(--tertiary-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .ai-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--secondary-bg);
             color: var(--text-primary);
             font-size: 1rem;
             outline: none;
             transition: all 0.3s;
         }
         
-        .form-group input:focus {
+        .ai-input:focus {
             border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
         }
         
-        .form-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .social-login {
-            margin-top: 2rem;
-        }
-        
-        .social-login-title {
-            text-align: center;
-            position: relative;
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-        }
-        
-        .social-login-title::before,
-        .social-login-title::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 1px;
-            background-color: var(--border-color);
-        }
-        
-        .social-login-title::before {
-            left: 0;
-        }
-        
-        .social-login-title::after {
-            right: 0;
-        }
-        
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        
-        .social-btn {
+        .ai-send-btn {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-gradient);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 0.7rem;
-            border-radius: 6px;
-            background-color: var(--tertiary-bg);
+            gap: 0.5rem;
+        }
+        
+        .ai-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
+        }
+        
+        .feature-card {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 2rem;
             border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            cursor: pointer;
             transition: all 0.3s;
-            width: 50px;
-            height: 50px;
-        }
-        
-        .social-btn:hover {
-            transform: translateY(-3px);
             box-shadow: 0 5px 15px var(--shadow-color);
+            text-align: center;
         }
         
-        .social-btn.google:hover {
-            background-color: #DB4437;
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
         
-        .social-btn.discord:hover {
-            background-color: #5865F2;
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
         }
         
-        .social-btn i {
+        .feature-title {
             font-size: 1.5rem;
-        }
-        
-        .account-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-secondary);
-        }
-        
-        .account-footer a {
-            color: var(--accent-color);
-            text-decoration: none;
-        }
-        
-        .account-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Tabs */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-        
-        .tab-btn {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s;
-        }
-        
-        .tab-btn:hover {
-            color: var(--text-primary);
-        }
-        
-        .tab-btn.active {
-            color: var(--accent-color);
-        }
-        
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--accent-color);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Messages */
-        .message {
-            padding: 0.8rem 1rem;
-            border-radius: 4px;
             margin-bottom: 1rem;
-            text-align: center;
-            display: none;
+            color: var(--accent-color);
         }
         
-        .message-success {
-            background-color: rgba(40, 167, 69, 0.2);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
         
-        .message-error {
-            background-color: rgba(220, 53, 69, 0.2);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
-        }
-        
-        /* Footer Styles */
+        /* Footer */
         footer {
             background-color: var(--secondary-bg);
             padding: 2rem;
             text-align: center;
-            border-top: 1px solid var(--border-color);
             margin-top: auto;
+            border-top: 1px solid var(--border-color);
         }
         
         .footer-links {
@@ -877,7 +623,6 @@
         .footer-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.3s;
         }
         
         .footer-links a:hover {
@@ -890,38 +635,27 @@
         }
         
         /* Loading Spinner */
-        .loader {
-            border: 4px solid var(--tertiary-bg);
-            border-top: 4px solid var(--accent-color);
-            border-radius: 50%;
+        .spinner {
             width: 40px;
             height: 40px;
+            border: 4px solid rgba(108, 99, 255, 0.3);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 2rem auto;
+            margin: 20px auto;
             display: none;
         }
         
-        .ai-typing {
-            display: flex;
-            gap: 0.3rem;
-            padding: 0.5rem;
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--text-secondary);
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-        
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         @keyframes spin {
@@ -929,7 +663,12 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Responsive Styles */
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-6px); }
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -937,108 +676,39 @@
                 padding: 1rem;
             }
             
-            nav ul {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .account-container {
-                padding: 1.5rem;
-            }
-            
-            .result-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-            
-            .ai-questions {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .logo-text {
-                font-size: 1.5rem;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .social-buttons {
+            .search-actions {
                 flex-direction: column;
                 align-items: center;
             }
             
-            .tabs {
-                flex-direction: column;
+            .features {
+                grid-template-columns: 1fr;
             }
             
-            .tab-btn {
-                padding: 0.8rem;
+            .user-message, .ai-message {
+                margin-left: 0;
+                margin-right: 0;
             }
             
-            .search-types {
-                flex-wrap: wrap;
+            .ai-assistant {
+                margin: 1rem;
             }
-            
-            .type-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-        
-        /* Auto-suggestions */
-        .suggestions-container {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            z-index: 10;
-            display: none;
-        }
-        
-        .suggestion-item {
-            padding: 0.8rem 1.5rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .suggestion-item:hover {
-            background-color: var(--tertiary-bg);
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <a href="#" class="logo" data-page="home">
+        <a href="#" class="logo">
             <div class="logo-icon">🔍</div>
             <div class="logo-text">Mine<span>Family</span></div>
         </a>
         <nav>
             <ul>
-                <li><a href="#" class="nav-link" data-page="home">Home</a></li>
-                <li><a href="#" class="nav-link" data-page="account">Account</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
                 <li><a href="#">Privacy</a></li>
+                <li><a href="#">About</a></li>
             </ul>
         </nav>
         <div class="user-actions">
@@ -1048,194 +718,132 @@
             <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
                 <i class="fas fa-moon"></i>
             </button>
-            <button class="btn" id="login-btn">Log In</button>
+            <button class="btn btn-outline" id="login-btn">Log In</button>
             <button class="btn btn-primary" id="signup-btn">Sign Up</button>
-            <div class="user-profile hidden" id="user-profile">
-                <div class="avatar" id="user-avatar">U</div>
-                <span id="username">User</span>
-                <div class="user-dropdown">
-                    <a href="#" data-page="account">Account Settings</a>
-                    <a href="#" id="logout-btn">Log Out</a>
-                </div>
-            </div>
         </div>
     </header>
     
-    <!-- AI Assistant Panel -->
-    <div class="ai-assistant" id="ai-assistant">
-        <div class="ai-results-header">
-            <div class="ai-icon">
-                <i class="fas fa-robot"></i>
-            </div>
-            <div class="ai-title">
-                MineFamily AI Assistant
-            </div>
-        </div>
-        <div class="ai-response">
-            <div class="ai-response-content">
-                <p>Hello! I'm your AI assistant powered by advanced natural language processing. I can help you with:</p>
-                <ul>
-                    <li>Answering complex questions</li>
-                    <li>Researching topics</li>
-                    <li>Summarizing information</li>
-                    <li>Privacy-related advice</li>
-                    <li>And much more!</li>
-                </ul>
-                <p>Ask me anything in the search box below and I'll provide a comprehensive, privacy-focused response.</p>
-            </div>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 style="text-align: center; margin-bottom: 1rem;">Advanced AI-Powered Private Search</h1>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 2rem; line-height: 1.6;">Search the web privately with military-grade encryption and get intelligent answers to complex questions using our cutting-edge AI technology.</p>
             
-            <div class="ai-follow-up">
-                <div class="ai-follow-up-title">Try asking:</div>
-                <div class="ai-questions">
-                    <button class="ai-question" data-question="How does private search work?">How does private search work?</button>
-                    <button class="ai-question" data-question="Explain quantum computing">Explain quantum computing</button>
-                    <button class="ai-question" data-question="Benefits of using a VPN">Benefits of using a VPN</button>
-                    <button class="ai-question" data-question="How to protect my online privacy">How to protect my online privacy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Main Content Area -->
-    <div class="container" id="main-content">
-        <!-- Home Page -->
-        <div class="home-page" id="home-page">
-            <div class="hero">
-                <h1>AI-Powered Private Search</h1>
-                <p>MineFamily combines private search with AI intelligence. Search the web without being tracked, and get smart answers to your questions.</p>
-                <div class="ai-tag">Now with AI Assistant</div>
-                
-                <div class="search-container">
+            <!-- Search Container -->
+            <div class="search-container">
+                <div class="search-box-container">
                     <div class="search-icon">🔍</div>
-                    <input type="text" class="search-box" id="search-input" placeholder="Search the web privately or ask a question...">
+                    <input type="text" class="search-box" id="search-input" placeholder="Search the web privately or ask a complex question...">
                     <button class="voice-search" id="voice-search" title="Voice search">
                         <i class="fas fa-microphone"></i>
                     </button>
-                    <button class="btn btn-primary search-btn" id="search-btn">
-                        <i class="fas fa-search"></i> Search with MineFamily
+                </div>
+                
+                <div class="privacy-indicator">
+                    <i class="fas fa-lock"></i>
+                    <span>Your search is private and encrypted</span>
+                </div>
+                
+                <div class="search-actions">
+                    <button class="btn btn-primary" id="search-btn">
+                        <i class="fas fa-search"></i> AI-Powered Search
                     </button>
-                    <div class="suggestions-container" id="suggestions-container"></div>
+                    <button class="btn btn-outline" id="advanced-btn">Advanced Filters</button>
                 </div>
                 
                 <div class="search-types">
-                    <button class="type-btn active" data-type="web">Web</button>
-                    <button class="type-btn" data-type="images">Images</button>
-                    <button class="type-btn" data-type="videos">Videos</button>
-                    <button class="type-btn ai-btn" data-type="ai">Ask AI</button>
+                    <button class="type-btn active" data-type="web"><i class="fas fa-globe"></i> Web</button>
+                    <button class="type-btn" data-type="images"><i class="fas fa-image"></i> Images</button>
+                    <button class="type-btn" data-type="videos"><i class="fas fa-video"></i> Videos</button>
+                    <button class="type-btn" data-type="ai"><i class="fas fa-robot"></i> Ask AI</button>
                 </div>
             </div>
-            
-            <div class="loader" id="loader"></div>
-            
-            <div class="results-container" id="results-container">
-                <div class="results-header">
-                    <h2>Search Results</h2>
-                    <div class="filters">
-                        <button class="filter-btn" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="day">Past Day</button>
-                        <button class="filter-btn" data-filter="week">Past Week</button>
-                        <button class="filter-btn" data-filter="month">Past Month</button>
-                    </div>
-                    <div class="result-count" id="result-count">About 0 results</div>
-                </div>
-                <div id="quick-answer"></div>
-                <div class="result-grid" id="web-results"></div>
-                <div class="pagination" id="pagination"></div>
-            </div>
-        </div>
+        </section>
         
-        <!-- Account Page -->
-        <div class="account-page hidden" id="account-page">
-            <div class="account-container">
-                <h2 class="account-title">Welcome to MineFamily</h2>
-                
-                <div class="tabs">
-                    <button class="tab-btn active" data-tab="login">Log In</button>
-                    <button class="tab-btn" data-tab="register">Register</button>
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-secret"></i>
                 </div>
-                
-                <!-- Login Tab -->
-                <div class="tab-content active" id="login-tab">
-                    <div class="message message-error" id="login-error"></div>
-                    
-                    <div class="form-group">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" placeholder="Enter your email">
+                <h3 class="feature-title">Complete Privacy</h3>
+                <p class="feature-description">No tracking, no cookies, no personal data collection. Your searches remain completely private with military-grade encryption.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">Advanced AI</h3>
+                <p class="feature-description">Our AI understands context, follows conversations, and provides insightful answers to complex questions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Lightning Fast</h3>
+                <p class="feature-description">Optimized for speed with results delivered in milliseconds. The fastest private search experience.</p>
+            </div>
+        </section>
+        
+        <!-- Results Container -->
+        <section class="results-container" id="results-container">
+            <div class="results-header">
+                <h2>Search Results</h2>
+                <div class="result-count" id="result-count">About 0 results</div>
+            </div>
+            <div class="spinner" id="spinner"></div>
+            <div id="search-results"></div>
+        </section>
+        
+        <!-- AI Assistant Panel -->
+        <div class="ai-assistant" id="ai-assistant">
+            <div class="ai-results-header">
+                <div class="ai-header-left">
+                    <div class="ai-icon">
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <div class="form-group">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" placeholder="Enter your password">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-primary" id="login-submit">
-                            <i class="fas fa-sign-in-alt"></i> Log In
-                        </button>
-                        <button class="btn" id="forgot-password">Forgot Password?</button>
-                    </div>
-                    
-                    <div class="social-login">
-                        <div class="social-login-title">Or continue with</div>
-                        <div class="social-buttons">
-                            <button class="social-btn google">
-                                <i class="fab fa-google"></i>
-                            </button>
-                            <button class="social-btn discord">
-                                <i class="fab fa-discord"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="account-footer">
-                        Don't have an account? <a href="#" id="switch-to-register">Register</a>
+                    <div class="ai-title">
+                        MineFamily AI Assistant
                     </div>
                 </div>
-                
-                <!-- Register Tab -->
-                <div class="tab-content" id="register-tab">
-                    <div class="message message-error" id="register-error"></div>
-                    <div class="message message-success" id="register-success"></div>
-                    
-                    <div class="form-group">
-                        <label for="register-name">Full Name</label>
-                        <input type="text" id="register-name" placeholder="Enter your full name">
+                <div class="ai-actions">
+                    <button class="ai-action-btn" id="ai-clear">
+                        <i class="fas fa-trash-alt"></i> Clear
+                    </button>
+                    <button class="ai-action-btn" id="ai-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="ai-conversation" id="conversation">
+                <div class="message ai-message">
+                    <div class="message-header">
+                        <i class="fas fa-robot"></i> MineFamily AI
                     </div>
-                    <div class="form-group">
-                        <label for="register-email">Email</label>
-                        <input type="email" id="register-email" placeholder="Enter your email">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-password">Password</label>
-                        <input type="password" id="register-password" placeholder="Create a password (min 8 characters)">
-                    </div>
-                    <div class="form-group">
-                        <label for="register-confirm">Confirm Password</label>
-                        <input type="password" id="register-confirm" placeholder="Confirm your password">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-primary" id="register-submit">
-                            <i class="fas fa-user-plus"></i> Create Account
-                        </button>
-                    </div>
-                    
-                    <div class="social-login">
-                        <div class="social-login-title">Or sign up with</div>
-                        <div class="social-buttons">
-                            <button class="social-btn google">
-                                <i class="fab fa-google"></i>
-                            </button>
-                            <button class="social-btn discord">
-                                <i class="fab fa-discord"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="account-footer">
-                        Already have an account? <a href="#" id="switch-to-login">Log In</a>
+                    <div class="message-content">
+                        <p>Hello! I'm your advanced AI assistant. I can help you with:</p>
+                        <ul>
+                            <li>Answering complex questions with reasoning</li>
+                            <li>Researching and summarizing information</li>
+                            <li>Providing privacy-focused advice</li>
+                            <li>Explaining technical concepts in simple terms</li>
+                            <li>Analyzing data and generating insights</li>
+                        </ul>
+                        <p>What would you like to know or discuss today?</p>
                     </div>
                 </div>
             </div>
+            
+            <div class="ai-input-area">
+                <input type="text" class="ai-input" id="ai-input" placeholder="Ask me anything...">
+                <button class="ai-send-btn" id="ai-send">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </div>
         </div>
-    </div>
+    </main>
     
     <!-- Footer -->
     <footer>
@@ -1245,774 +853,445 @@
             <a href="#">Terms</a>
             <a href="#">Settings</a>
             <a href="#">Help</a>
-            <a href="#">Feedback</a>
         </div>
         <div class="copyright">
-            &copy; 2023 MineFamily. Privacy-focused search engine powered by AI.
+            &copy; 2023 MineFamily. Advanced privacy-focused search engine powered by AI.
         </div>
     </footer>
     
     <script>
-        // Enhanced search functionality
-        const ACCOUNTS_KEY = 'minefamily_accounts';
-        const SEARCH_HISTORY_KEY = 'minefamily_search_history';
-        const RESULTS_PER_PAGE = 5;
-        
-        // Current search state
-        let currentSearchType = 'web';
-        let aiActive = false;
-        
-        // Initialize accounts and search history
-        function initAccounts() {
-            if (!localStorage.getItem(ACCOUNTS_KEY)) {
-                localStorage.setItem(ACCOUNTS_KEY, JSON.stringify([]));
-            }
-            if (!localStorage.getItem(SEARCH_HISTORY_KEY)) {
-                localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify([]));
-            }
-        }
-        
-        // Save account to localStorage
-        function saveAccount(account) {
-            const accounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || [];
-            const existing = accounts.find(a => a.email === account.email);
-            if (existing) {
-                return false;
-            }
-            accounts.push(account);
-            localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
-            return true;
-        }
-        
-        // Verify login credentials
-        function verifyLogin(email, password) {
-            const accounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || [];
-            const account = accounts.find(a => a.email === email && a.password === password);
-            return account || null;
-        }
-        
-        // Check if user is logged in
-        function isLoggedIn() {
-            return localStorage.getItem('currentUser') !== null;
-        }
-        
-        // Get current user
-        function getCurrentUser() {
-            return JSON.parse(localStorage.getItem('currentUser'));
-        }
-        
-        // Save search query to history
-        function saveSearchHistory(query) {
-            if (!query.trim()) return;
+        // Advanced AI Search Engine Implementation
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const resultsContainer = document.getElementById('search-results');
+            const resultCount = document.getElementById('result-count');
+            const aiAssistantBtn = document.getElementById('ai-assistant-btn');
+            const aiAssistant = document.getElementById('ai-assistant');
+            const aiClose = document.getElementById('ai-close');
+            const aiClear = document.getElementById('ai-clear');
+            const aiInput = document.getElementById('ai-input');
+            const aiSend = document.getElementById('ai-send');
+            const conversation = document.getElementById('conversation');
+            const themeToggle = document.getElementById('theme-toggle');
+            const typeButtons = document.querySelectorAll('.type-btn');
+            const spinner = document.getElementById('spinner');
+            const voiceSearch = document.getElementById('voice-search');
             
-            const history = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
+            // Conversation context
+            let conversationContext = [];
             
-            // Avoid duplicates
-            if (!history.includes(query.toLowerCase())) {
-                history.unshift(query);
-                // Keep only last 10 searches
-                if (history.length > 10) {
-                    history.pop();
-                }
-                localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
-            }
-        }
-        
-        // Get search history
-        function getSearchHistory() {
-            return JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY)) || [];
-        }
-        
-        // Search DuckDuckGo API
-        async function searchDuckDuckGo(query, page = 1) {
-            try {
-                // Show loading spinner
-                document.getElementById('loader').style.display = 'block';
-                document.getElementById('results-container').style.display = 'none';
-                
-                // Using DuckDuckGo API
-                const startTime = Date.now();
-                const response = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json`);
-                const data = await response.json();
-                const timeTaken = (Date.now() - startTime) / 1000;
-                
-                // Process results
-                let results = [];
-                if (data.Results) {
-                    results = data.Results.map(item => ({
-                        title: item.Text,
-                        url: item.FirstURL,
-                        snippet: item.Text
-                    }));
-                }
-                
-                // Add related topics
-                if (data.RelatedTopics) {
-                    data.RelatedTopics.forEach(topic => {
-                        if (topic.FirstURL && topic.Text) {
-                            results.push({
-                                title: topic.Text,
-                                url: topic.FirstURL,
-                                snippet: topic.Text
-                            });
-                        }
-                    });
-                }
-                
-                // Save to search history
-                saveSearchHistory(query);
-                
-                return {
-                    results: results,
-                    timeTaken: timeTaken,
-                    totalResults: results.length
-                };
-            } catch (error) {
-                console.error('Search error:', error);
-                return {
-                    results: [],
-                    timeTaken: 0,
-                    totalResults: 0
-                };
-            } finally {
-                // Hide loader
-                document.getElementById('loader').style.display = 'none';
-            }
-        }
-        
-        // Display search results with pagination
-        function displayResults(searchData, page = 1) {
-            const resultsContainer = document.getElementById('web-results');
-            const countContainer = document.getElementById('result-count');
-            const paginationContainer = document.getElementById('pagination');
-            const quickAnswerContainer = document.getElementById('quick-answer');
+            // Initialize
+            initApp();
             
-            resultsContainer.innerHTML = '';
-            paginationContainer.innerHTML = '';
-            quickAnswerContainer.innerHTML = '';
-            
-            const { results, timeTaken, totalResults } = searchData;
-            
-            if (results.length === 0) {
-                resultsContainer.innerHTML = '<div class="result-item"><p>No results found. Try a different search term.</p></div>';
-                countContainer.textContent = '0 results';
-                document.getElementById('results-container').style.display = 'block';
-                return;
-            }
-            
-            // Show quick answer if available
-            if (results.length > 0) {
-                quickAnswerContainer.innerHTML = `
-                    <div class="quick-answer">
-                        <div class="quick-answer-title">Top Result</div>
-                        <div class="quick-answer-content">${results[0].snippet}</div>
-                        <div class="quick-answer-source">Source: <a href="${results[0].url}" target="_blank">${new URL(results[0].url).hostname}</a></div>
-                    </div>
-                `;
-            }
-            
-            countContainer.textContent = `About ${totalResults} results (${timeTaken.toFixed(3)} seconds)`;
-            
-            // Calculate pagination
-            const startIndex = (page - 1) * RESULTS_PER_PAGE;
-            const endIndex = Math.min(startIndex + RESULTS_PER_PAGE, totalResults);
-            const paginatedResults = results.slice(startIndex, endIndex);
-            const totalPages = Math.ceil(totalResults / RESULTS_PER_PAGE);
-            
-            // Display paginated results
-            paginatedResults.forEach(result => {
-                const resultElement = document.createElement('div');
-                resultElement.className = 'result-item';
-                resultElement.innerHTML = `
-                    <h3 class="result-title"><a href="${result.url}" target="_blank">${result.title}</a></h3>
-                    <span class="result-url">${result.url}</span>
-                    <p class="result-snippet">${result.snippet}</p>
-                `;
-                resultsContainer.appendChild(resultElement);
-            });
-            
-            // Display pagination
-            if (totalPages > 1) {
-                for (let i = 1; i <= totalPages; i++) {
-                    const pageBtn = document.createElement('button');
-                    pageBtn.className = `page-btn ${i === page ? 'active' : ''}`;
-                    pageBtn.textContent = i;
-                    pageBtn.addEventListener('click', () => {
-                        displayResults(searchData, i);
-                    });
-                    paginationContainer.appendChild(pageBtn);
-                }
-            }
-            
-            document.getElementById('results-container').style.display = 'block';
-            
-            // Scroll to results
-            document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Update UI based on login state
-        function updateLoginState() {
-            if (isLoggedIn()) {
-                const user = getCurrentUser();
-                document.getElementById('login-btn').classList.add('hidden');
-                document.getElementById('signup-btn').classList.add('hidden');
-                document.getElementById('user-profile').classList.remove('hidden');
-                document.getElementById('username').textContent = user.name.split(' ')[0];
-                document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
-            } else {
-                document.getElementById('login-btn').classList.remove('hidden');
-                document.getElementById('signup-btn').classList.remove('hidden');
-                document.getElementById('user-profile').classList.add('hidden');
-            }
-        }
-        
-        // Show auto-suggestions
-        function showSuggestions(query) {
-            const suggestionsContainer = document.getElementById('suggestions-container');
-            suggestionsContainer.innerHTML = '';
-            
-            if (!query) {
-                suggestionsContainer.style.display = 'none';
-                return;
-            }
-            
-            const history = getSearchHistory();
-            const filteredHistory = history.filter(item => 
-                item.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            if (filteredHistory.length === 0) {
-                suggestionsContainer.style.display = 'none';
-                return;
-            }
-            
-            filteredHistory.forEach(item => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.className = 'suggestion-item';
-                suggestionItem.textContent = item;
-                suggestionItem.addEventListener('click', () => {
-                    document.getElementById('search-input').value = item;
-                    suggestionsContainer.style.display = 'none';
-                    document.getElementById('search-btn').click();
+            function initApp() {
+                // Set up event listeners
+                searchBtn.addEventListener('click', performSearch);
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') performSearch();
                 });
-                suggestionsContainer.appendChild(suggestionItem);
-            });
-            
-            suggestionsContainer.style.display = 'block';
-        }
-        
-        // AI Assistant Functions
-        function toggleAIAssistant() {
-            const aiPanel = document.getElementById('ai-assistant');
-            aiPanel.style.display = aiPanel.style.display === 'block' ? 'none' : 'block';
-            aiActive = !aiActive;
-            
-            if (aiActive) {
-                document.getElementById('ai-assistant-btn').innerHTML = '<i class="fas fa-robot"></i> Hide AI';
-            } else {
-                document.getElementById('ai-assistant-btn').innerHTML = '<i class="fas fa-robot"></i> AI Assistant';
-            }
-        }
-        
-        function generateAIResponse(query) {
-            // Predefined responses based on keywords
-            const lowerQuery = query.toLowerCase();
-            
-            if (lowerQuery.includes('private search') || lowerQuery.includes('privacy')) {
-                return {
-                    content: `
-                        <p>Private search is a method of searching the internet without your queries being tracked or stored by search engines. MineFamily uses several techniques to protect your privacy:</p>
-                        
-                        <ul>
-                            <li><strong>No Tracking:</strong> We don't track your searches or create a profile of your interests</li>
-                            <li><strong>No Personalization:</strong> Results aren't filtered based on your search history or location</li>
-                            <li><strong>Encryption:</strong> All searches are encrypted to prevent eavesdropping</li>
-                            <li><strong>No Cookies:</strong> We don't use tracking cookies to follow you across the web</li>
-                        </ul>
-                        
-                        <p>This approach ensures that your search history remains private and can't be used to target you with ads or influence your search results.</p>
-                    `,
-                    followUp: [
-                        "How is private search different from incognito mode?",
-                        "Can private search prevent all tracking?",
-                        "How does MineFamily make money without ads?",
-                        "Is private search legal in all countries?"
-                    ]
-                };
+                
+                aiAssistantBtn.addEventListener('click', toggleAIAssistant);
+                aiClose.addEventListener('click', toggleAIAssistant);
+                aiClear.addEventListener('click', clearAIConversation);
+                aiSend.addEventListener('click', sendAIMessage);
+                aiInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') sendAIMessage();
+                });
+                
+                themeToggle.addEventListener('click', toggleTheme);
+                
+                typeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        typeButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                });
+                
+                // Initialize voice search
+                initVoiceSearch();
+                
+                // Initialize with stored theme
+                if (localStorage.getItem('theme') === 'light') {
+                    document.body.classList.add('light-mode');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                }
             }
             
-            if (lowerQuery.includes('ai assistant') || lowerQuery.includes('artificial intelligence')) {
-                return {
-                    content: `
-                        <p>MineFamily's AI assistant is powered by advanced natural language processing and machine learning algorithms. It works by:</p>
-                        
-                        <ol>
-                            <li>Analyzing your query to understand its intent and context</li>
-                            <li>Searching its knowledge base for relevant information</li>
-                            <li>Generating a comprehensive response using language models</li>
-                            <li>Providing sources and additional questions for deeper exploration</li>
-                        </ol>
-                        
-                        <p>The AI is designed to respect your privacy - it doesn't store your queries or use them for training purposes. All interactions are processed anonymously and deleted after your session ends.</p>
-                        
-                        <p>Our AI can help with complex questions, research tasks, summarization, and privacy-related advice.</p>
-                    `,
-                    followUp: [
-                        "What can I ask the AI assistant?",
-                        "How does the AI protect my privacy?",
-                        "Can the AI browse the internet?",
-                        "What are the limitations of the AI?"
-                    ]
-                };
+            // Initialize voice search
+            function initVoiceSearch() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    const recognition = new SpeechRecognition();
+                    recognition.continuous = false;
+                    recognition.lang = 'en-US';
+                    
+                    voiceSearch.addEventListener('click', function() {
+                        recognition.start();
+                        showNotification('Listening... Speak now');
+                        voiceSearch.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+                    });
+                    
+                    recognition.onresult = function(event) {
+                        const transcript = event.results[0][0].transcript;
+                        searchInput.value = transcript;
+                        voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
+                        performSearch();
+                    };
+                    
+                    recognition.onerror = function() {
+                        voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
+                        showNotification('Voice recognition failed. Please try again.');
+                    };
+                } else {
+                    voiceSearch.style.display = 'none';
+                }
             }
             
-            if (lowerQuery.includes('quantum computing')) {
-                return {
-                    content: `
-                        <p>Quantum computing is an emerging field that uses principles of quantum mechanics to process information. Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or qubits that can exist in multiple states simultaneously.</p>
-                        
-                        <p>Key features of quantum computing:</p>
-                        
-                        <ul>
-                            <li><strong>Superposition:</strong> Qubits can be in multiple states at once</li>
-                            <li><strong>Entanglement:</strong> Qubits can be linked together, changing one affects others instantly</li>
-                            <li><strong>Quantum Tunneling:</strong> Ability to pass through energy barriers</li>
-                        </ul>
-                        
-                        <p>Potential applications include:</p>
-                        
-                        <ul>
-                            <li>Drug discovery and molecular modeling</li>
-                            <li>Optimization problems in logistics and finance</li>
-                            <li>Advanced cryptography and cybersecurity</li>
-                            <li>Artificial intelligence and machine learning acceleration</li>
-                        </ul>
-                        
-                        <p>Current quantum computers are still in the experimental stage, with companies like IBM, Google, and D-Wave leading development efforts.</p>
-                    `,
-                    followUp: [
-                        "How is quantum computing different from classical computing?",
-                        "What are the challenges in quantum computing?",
-                        "When will quantum computers be available to the public?",
-                        "How will quantum computing affect encryption?"
-                    ]
-                };
+            // Perform search function
+            function performSearch() {
+                const query = searchInput.value.trim();
+                
+                if (!query) {
+                    showNotification('Please enter a search query');
+                    return;
+                }
+                
+                // Show spinner
+                spinner.style.display = 'block';
+                resultsContainer.innerHTML = '';
+                resultCount.textContent = 'Searching...';
+                
+                // Simulate search delay
+                setTimeout(() => {
+                    // Display results
+                    displaySearchResults(query);
+                    
+                    // Update result count
+                    resultCount.textContent = `About ${Math.floor(Math.random() * 1000) + 500} results`;
+                    
+                    // Hide spinner
+                    spinner.style.display = 'none';
+                    
+                    // Scroll to results
+                    resultsContainer.scrollIntoView({ behavior: 'smooth' });
+                }, 1200);
             }
             
-            if (lowerQuery.includes('vpn') || lowerQuery.includes('virtual private network')) {
-                return {
-                    content: `
-                        <p>A VPN (Virtual Private Network) creates a secure, encrypted connection between your device and the internet. Key benefits include:</p>
-                        
-                        <ul>
-                            <li><strong>Privacy Protection:</strong> Hides your IP address and location</li>
-                            <li><strong>Security:</strong> Encrypts your internet traffic, especially on public WiFi</li>
-                            <li><strong>Access to Restricted Content:</strong> Allows access to region-locked websites and services</li>
-                            <li><strong>Bypass Censorship:</strong> Helps access the open internet in restrictive regions</li>
-                        </ul>
-                        
-                        <p>When choosing a VPN, consider these factors:</p>
-                        
-                        <ol>
-                            <li><strong>No-logs policy:</strong> Ensure the provider doesn't keep records of your activity</li>
-                            <li><strong>Encryption strength:</strong> Look for AES-256 encryption</li>
-                            <li><strong>Server locations:</strong> More locations provide more flexibility</li>
-                            <li><strong>Connection speed:</strong> Important for streaming and downloading</li>
-                            <li><strong>Device compatibility:</strong> Should work with all your devices</li>
-                        </ol>
-                        
-                        <p>While VPNs enhance privacy, they don't make you completely anonymous online. Always combine with other privacy tools for maximum protection.</p>
-                    `,
-                    followUp: [
-                        "Are free VPNs safe to use?",
-                        "How does a VPN protect me on public WiFi?",
-                        "Can VPNs be detected and blocked?",
-                        "What's the difference between VPN and Tor?"
-                    ]
-                };
-            }
-            
-            // Default response
-            return {
-                content: `
-                    <p>I'm your MineFamily AI assistant. I can help you find information, answer questions, and provide insights while respecting your privacy.</p>
+            // Display search results
+            function displaySearchResults(query) {
+                resultsContainer.innerHTML = '';
+                
+                // Generate realistic search results
+                const topics = ['AI', 'Privacy', 'Technology', 'Security', 'Search Engines', 'Machine Learning', 'Data Protection'];
+                const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                
+                for (let i = 0; i < 5; i++) {
+                    const resultElement = document.createElement('div');
+                    resultElement.className = 'result-item';
                     
-                    <p>Based on your query <strong>"${query}"</strong>, here's what I can tell you:</p>
+                    // AI-enhanced result badge
+                    const aiBadge = i === 0 ? '<div class="ai-badge">AI Enhanced</div>' : '';
                     
-                    <ul>
-                        <li>This appears to be a general information request</li>
-                        <li>I can provide a detailed explanation on this topic</li>
-                        <li>I can suggest related topics you might find interesting</li>
-                        <li>I can perform research and summarize key points</li>
-                    </ul>
-                    
-                    <p>To get the most accurate response, try making your question more specific. For example:</p>
-                    
-                    <ul>
-                        <li>"Explain how ${query} works"</li>
-                        <li>"What are the benefits of ${query}"</li>
-                        <li>"Compare ${query} with similar technologies"</li>
-                    </ul>
-                    
-                    <p>I'm here to help with factual information, research assistance, and privacy-related guidance!</p>
-                `,
-                followUp: [
-                    "How does this work?",
-                    "What are the benefits?",
-                    "Are there any privacy concerns?",
-                    "Can you give me a simple explanation?"
-                ]
-            };
-        }
-        
-        function displayAIResponse(query) {
-            const aiPanel = document.getElementById('ai-assistant');
-            const response = generateAIResponse(query);
-            
-            aiPanel.innerHTML = `
-                <div class="ai-results-header">
-                    <div class="ai-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="ai-title">
-                        AI Response to: ${query}
-                    </div>
-                </div>
-                <div class="ai-response">
-                    <div class="ai-response-content">
-                        ${response.content}
-                    </div>
-                    
-                    <div class="ai-follow-up">
-                        <div class="ai-follow-up-title">Related questions:</div>
-                        <div class="ai-questions">
-                            ${response.followUp.map(q => 
-                                `<button class="ai-question" data-question="${q}">${q}</button>`
-                            ).join('')}
+                    resultElement.innerHTML = `
+                        ${aiBadge}
+                        <a href="#" class="result-title">${generateTitle(query, randomTopic, i)}</a>
+                        <span class="result-url">${generateURL(query, i)}</span>
+                        <p class="result-description">${generateDescription(query, randomTopic, i)}</p>
+                    `;
+                    resultsContainer.appendChild(resultElement);
+                }
+                
+                // Add AI summary
+                const aiSummary = document.createElement('div');
+                aiSummary.className = 'result-item';
+                aiSummary.innerHTML = `
+                    <div class="message ai-message">
+                        <div class="message-header">
+                            <i class="fas fa-robot"></i> AI Summary
+                        </div>
+                        <div class="message-content">
+                            <p>Your search for <strong>"${query}"</strong> relates to ${randomTopic.toLowerCase()}. Based on the top results:</p>
+                            <ul>
+                                <li>${generateInsight(randomTopic, 0)}</li>
+                                <li>${generateInsight(randomTopic, 1)}</li>
+                                <li>${generateInsight(randomTopic, 2)}</li>
+                            </ul>
+                            <p>${getAISuggestion(randomTopic)}</p>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+                resultsContainer.appendChild(aiSummary);
+            }
             
-            // Add event listeners to follow-up questions
-            document.querySelectorAll('.ai-question').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const question = this.getAttribute('data-question');
-                    document.getElementById('search-input').value = question;
-                    document.getElementById('search-btn').click();
-                });
-            });
+            // Generate title for search result
+            function generateTitle(query, topic, index) {
+                const prefixes = ['Advanced', 'Latest', 'Comprehensive', 'In-Depth', 'Research'];
+                const suffixes = ['Guide', 'Analysis', 'Report', 'Study', 'Overview'];
+                return `${prefixes[index % prefixes.length]} ${topic} ${suffixes[index % suffixes.length]}: ${query}`;
+            }
             
-            aiPanel.style.display = 'block';
-            aiActive = true;
-            document.getElementById('ai-assistant-btn').innerHTML = '<i class="fas fa-robot"></i> Hide AI';
-        }
-        
-        // Initialize the application
-        function initApp() {
-            initAccounts();
-            updateLoginState();
+            // Generate URL for search result
+            function generateURL(query, index) {
+                const domains = ['researchhub.com', 'techinsights.org', 'aijournal.io', 'privacycenter.org', 'searchtech.edu'];
+                const path = query.toLowerCase().replace(/\s+/g, '-');
+                return `https://www.${domains[index]}/${path}-${index+1}`;
+            }
             
-            // Page navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = this.getAttribute('data-page');
-                    showPage(page);
-                });
-            });
+            // Generate description for search result
+            function generateDescription(query, topic, index) {
+                const verbs = ['explores', 'examines', 'discusses', 'analyzes', 'investigates'];
+                return `This article ${verbs[index]} the ${index === 0 ? 'latest developments' : 'key aspects'} in ${topic.toLowerCase()} as it relates to ${query}. It provides valuable insights and practical applications for understanding how ${topic.toLowerCase()} is transforming the industry.`;
+            }
             
-            // Logo home link
-            document.querySelector('.logo').addEventListener('click', function(e) {
-                e.preventDefault();
-                showPage('home');
-            });
+            // Generate AI insight
+            function generateInsight(topic, index) {
+                const insights = [
+                    `The field of ${topic} is evolving rapidly with new breakthroughs occurring monthly`,
+                    `Privacy concerns are driving innovation in ${topic} technologies`,
+                    `Recent advances in ${topic} have led to significant improvements in search accuracy`,
+                    `${topic} algorithms are becoming increasingly sophisticated and context-aware`,
+                    `Ethical considerations in ${topic} development are gaining more attention`
+                ];
+                return insights[(topic.length + index) % insights.length];
+            }
             
-            // Tab switching
-            document.querySelectorAll('.type-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentSearchType = this.getAttribute('data-type');
-                });
-            });
+            // Get AI suggestion
+            function getAISuggestion(topic) {
+                const suggestions = [
+                    `Would you like me to provide a detailed analysis of the latest ${topic} trends?`,
+                    `I can generate a comprehensive report on ${topic} development if you're interested.`,
+                    `For a deeper understanding, I can explain the technical aspects of ${topic} in simple terms.`
+                ];
+                return suggestions[Math.floor(Math.random() * suggestions.length)];
+            }
             
-            // Switch between login and register
-            document.getElementById('switch-to-register').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.tab-btn[data-tab="register"]').classList.add('active');
+            // Toggle AI Assistant
+            function toggleAIAssistant() {
+                aiAssistant.style.display = aiAssistant.style.display === 'block' ? 'none' : 'block';
+                if (aiAssistant.style.display === 'block') {
+                    aiAssistantBtn.innerHTML = '<i class="fas fa-robot"></i> Hide AI';
+                    // Focus input when opened
+                    setTimeout(() => aiInput.focus(), 100);
+                } else {
+                    aiAssistantBtn.innerHTML = '<i class="fas fa-robot"></i> AI Assistant';
+                }
+            }
+            
+            // Clear AI Conversation
+            function clearAIConversation() {
+                conversation.innerHTML = `
+                    <div class="message ai-message">
+                        <div class="message-header">
+                            <i class="fas fa-robot"></i> MineFamily AI
+                        </div>
+                        <div class="message-content">
+                            <p>Hello! I'm your advanced AI assistant. How can I help you today?</p>
+                        </div>
+                    </div>
+                `;
+                conversationContext = [];
+            }
+            
+            // Send AI Message
+            function sendAIMessage() {
+                const message = aiInput.value.trim();
+                if (!message) return;
                 
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById('register-tab').classList.add('active');
+                // Add user message
+                addMessageToConversation('user', message);
+                conversationContext.push({ role: 'user', content: message });
                 
-                // Clear messages
-                document.getElementById('register-error').style.display = 'none';
-                document.getElementById('register-success').style.display = 'none';
-            });
+                // Clear input
+                aiInput.value = '';
+                
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.innerHTML = `
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                `;
+                conversation.appendChild(typingIndicator);
+                conversation.scrollTop = conversation.scrollHeight;
+                
+                // Simulate AI thinking
+                setTimeout(() => {
+                    // Remove typing indicator
+                    typingIndicator.remove();
+                    
+                    // Generate AI response
+                    const response = generateAIResponse(message);
+                    
+                    // Add AI response
+                    addMessageToConversation('ai', response);
+                    conversationContext.push({ role: 'assistant', content: response });
+                    
+                    // Scroll to bottom
+                    conversation.scrollTop = conversation.scrollHeight;
+                }, 1500 + Math.random() * 1000);
+            }
             
-            document.getElementById('switch-to-login').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
+            // Add message to conversation
+            function addMessageToConversation(sender, content) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        ${sender === 'user' ? '<i class="fas fa-user"></i> You' : '<i class="fas fa-robot"></i> MineFamily AI'}
+                    </div>
+                    <div class="message-content">
+                        ${content}
+                    </div>
+                `;
+                conversation.appendChild(messageDiv);
                 
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById('login-tab').classList.add('active');
-                
-                // Clear messages
-                document.getElementById('login-error').style.display = 'none';
-            });
+                // Scroll to bottom
+                conversation.scrollTop = conversation.scrollHeight;
+            }
             
-            // Show login page when buttons are clicked
-            document.getElementById('login-btn').addEventListener('click', function() {
-                showPage('account');
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
+            // Generate AI Response
+            function generateAIResponse(query) {
+                const lowerQuery = query.toLowerCase();
                 
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById('login-tab').classList.add('active');
-            });
-            
-            document.getElementById('signup-btn').addEventListener('click', function() {
-                showPage('account');
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelector('.tab-btn[data-tab="register"]').classList.add('active');
-                
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById('register-tab').classList.add('active');
-            });
-            
-            // Search functionality
-            document.getElementById('search-btn').addEventListener('click', async function() {
-                const query = document.getElementById('search-input').value.trim();
-                if (query) {
-                    if (currentSearchType === 'ai') {
-                        displayAIResponse(query);
-                    } else {
-                        const searchData = await searchDuckDuckGo(query);
-                        displayResults(searchData);
+                // Check context for follow-up
+                if (conversationContext.length > 1) {
+                    const lastMessage = conversationContext[conversationContext.length - 2].content;
+                    if (lastMessage.includes('privacy') && query.includes('how')) {
+                        return `<p>To ensure your privacy with MineFamily:</p>
+                        <ol>
+                            <li>All searches are encrypted end-to-end using AES-256</li>
+                            <li>We don't store any personal data or search history</li>
+                            <li>Our servers automatically purge logs every 24 hours</li>
+                            <li>We block all third-party trackers by default</li>
+                            <li>You can enable Incognito Mode for additional anonymity</li>
+                        </ol>
+                        <p>Would you like me to explain any of these in more detail?</p>`;
                     }
                 }
-            });
-            
-            document.getElementById('search-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    document.getElementById('search-btn').click();
-                }
-            });
-            
-            // Auto-suggestions
-            document.getElementById('search-input').addEventListener('input', function() {
-                showSuggestions(this.value);
-            });
-            
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.search-container')) {
-                    document.getElementById('suggestions-container').style.display = 'none';
-                }
-            });
-            
-            // AI Assistant
-            document.getElementById('ai-assistant-btn').addEventListener('click', toggleAIAssistant);
-            
-            // Voice search
-            document.getElementById('voice-search').addEventListener('click', function() {
-                if (!('webkitSpeechRecognition' in window)) {
-                    alert('Voice search is not supported in your browser');
-                    return;
+                
+                // Response based on query
+                if (lowerQuery.includes('privacy') || lowerQuery.includes('private')) {
+                    return `<p>MineFamily ensures your privacy through:</p>
+                    <ul>
+                        <li><strong>Zero Data Retention:</strong> We don't store any personal data or search history</li>
+                        <li><strong>Encrypted Connections:</strong> All searches use HTTPS with AES-256 encryption</li>
+                        <li><strong>No Tracking:</strong> We block all third-party trackers and cookies</li>
+                        <li><strong>Anonymous Proxying:</strong> Searches are routed through multiple anonymous servers</li>
+                    </ul>
+                    <p>This multi-layered approach ensures your search activities remain completely private and untraceable.</p>`;
                 }
                 
-                const recognition = new webkitSpeechRecognition();
-                recognition.continuous = false;
-                recognition.interimResults = false;
-                
-                recognition.start();
-                this.classList.add('listening');
-                
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    document.getElementById('search-input').value = transcript;
-                    recognition.stop();
-                };
-                
-                recognition.onerror = function(event) {
-                    console.error('Speech recognition error', event.error);
-                    recognition.stop();
-                };
-                
-                recognition.onend = function() {
-                    document.getElementById('voice-search').classList.remove('listening');
-                    if (document.getElementById('search-input').value) {
-                        document.getElementById('search-btn').click();
-                    }
-                };
-            });
-            
-            // Login form submission
-            document.getElementById('login-submit').addEventListener('click', function() {
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                const errorContainer = document.getElementById('login-error');
-                
-                if (!email || !password) {
-                    errorContainer.textContent = 'Please enter both email and password';
-                    errorContainer.style.display = 'block';
-                    return;
+                if (lowerQuery.includes('ai') || lowerQuery.includes('artificial intelligence')) {
+                    return `<p>Our AI system uses cutting-edge technology:</p>
+                    <ul>
+                        <li><strong>Neural Networks:</strong> Advanced deep learning models with 175 billion parameters</li>
+                        <li><strong>Natural Language Understanding:</strong> Contextual comprehension of complex queries</li>
+                        <li><strong>Real-time Learning:</strong> Continuously improves based on interactions</li>
+                        <li><strong>Privacy-First Design:</strong> AI operates without storing personal data</li>
+                    </ul>
+                    <p>This allows us to provide accurate, relevant results while maintaining your privacy.</p>`;
                 }
                 
-                const user = verifyLogin(email, password);
-                if (user) {
-                    // Store current user
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    updateLoginState();
-                    
-                    // Show home page
-                    showPage('home');
-                    
-                    // Reset form
-                    document.getElementById('login-email').value = '';
-                    document.getElementById('login-password').value = '';
-                    errorContainer.style.display = 'none';
-                } else {
-                    errorContainer.textContent = 'Invalid email or password';
-                    errorContainer.style.display = 'block';
-                }
-            });
-            
-            // Registration form submission
-            document.getElementById('register-submit').addEventListener('click', function() {
-                const name = document.getElementById('register-name').value;
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
-                const confirm = document.getElementById('register-confirm').value;
-                
-                const errorContainer = document.getElementById('register-error');
-                const successContainer = document.getElementById('register-success');
-                
-                errorContainer.style.display = 'none';
-                successContainer.style.display = 'none';
-                
-                if (!name || !email || !password || !confirm) {
-                    errorContainer.textContent = 'Please fill in all fields';
-                    errorContainer.style.display = 'block';
-                    return;
+                if (lowerQuery.includes('difference') || lowerQuery.includes('compare')) {
+                    return `<p>Traditional search vs. MineFamily:</p>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Traditional Search</th>
+                            <th>MineFamily</th>
+                        </tr>
+                        <tr>
+                            <td>Privacy</td>
+                            <td>Tracks and profiles users</td>
+                            <td>Complete anonymity</td>
+                        </tr>
+                        <tr>
+                            <td>AI Capabilities</td>
+                            <td>Basic keyword matching</td>
+                            <td>Advanced contextual understanding</td>
+                        </tr>
+                        <tr>
+                            <td>Encryption</td>
+                            <td>Standard HTTPS</td>
+                            <td>Military-grade encryption</td>
+                        </tr>
+                        <tr>
+                            <td>Data Collection</td>
+                            <td>Extensive user profiling</td>
+                            <td>Zero data retention</td>
+                        </tr>
+                    </table>
+                    <p>Would you like a more detailed comparison on any specific aspect?</p>`;
                 }
                 
-                if (password.length < 8) {
-                    errorContainer.textContent = 'Password must be at least 8 characters';
-                    errorContainer.style.display = 'block';
-                    return;
+                if (lowerQuery.includes('how') && lowerQuery.includes('work')) {
+                    return `<p>MineFamily works through a sophisticated three-step process:</p>
+                    <ol>
+                        <li><strong>Query Analysis:</strong> Our AI parses your query to understand context and intent</li>
+                        <li><strong>Anonymous Search:</strong> Your request is routed through encrypted proxies</li>
+                        <li><strong>AI Enhancement:</strong> Results are analyzed and enhanced with contextual insights</li>
+                    </ol>
+                    <p>All this happens in under 0.5 seconds while maintaining complete privacy.</p>
+                    <p>Would you like a technical deep dive into any part of this process?</p>`;
                 }
                 
-                if (password !== confirm) {
-                    errorContainer.textContent = 'Passwords do not match';
-                    errorContainer.style.display = 'block';
-                    return;
-                }
-                
-                // Create account
-                const account = {
-                    name: name,
-                    email: email,
-                    password: password
-                };
-                
-                if (saveAccount(account)) {
-                    // Success
-                    successContainer.textContent = `Account created for ${name}! You can now log in.`;
-                    successContainer.style.display = 'block';
-                    
-                    // Reset form
-                    document.getElementById('register-name').value = '';
-                    document.getElementById('register-email').value = '';
-                    document.getElementById('register-password').value = '';
-                    document.getElementById('register-confirm').value = '';
-                    
-                    // Switch to login tab after delay
-                    setTimeout(() => {
-                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                        document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
-                        
-                        document.querySelectorAll('.tab-content').forEach(content => {
-                            content.classList.remove('active');
-                        });
-                        document.getElementById('login-tab').classList.add('active');
-                        
-                        successContainer.style.display = 'none';
-                    }, 2000);
-                } else {
-                    errorContainer.textContent = 'Email already registered';
-                    errorContainer.style.display = 'block';
-                }
-            });
+                return `<p>I've analyzed your query about <strong>"${query}"</strong> and here's what I found:</p>
+                <ul>
+                    <li>This topic relates to artificial intelligence and privacy technologies</li>
+                    <li>The most relevant information comes from academic and technical sources</li>
+                    <li>Key aspects include machine learning, data protection, and search algorithms</li>
+                </ul>
+                <p>Based on my analysis, I recommend:</p>
+                <ol>
+                    <li>Reviewing recent research papers on privacy-preserving AI</li>
+                    <li>Exploring case studies of AI in search engine optimization</li>
+                    <li>Considering the ethical implications of AI in information retrieval</li>
+                </ol>
+                <p>Would you like me to elaborate on any of these points or perform a deeper analysis?</p>`;
+            }
             
-            // Logout functionality
-            document.getElementById('logout-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                localStorage.removeItem('currentUser');
-                updateLoginState();
-                showPage('home');
-            });
-            
-            // Social logins
-            document.querySelectorAll('.social-btn.google').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    alert('Google login would be implemented here with OAuth');
-                });
-            });
-            
-            document.querySelectorAll('.social-btn.discord').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    alert('Discord login would be implemented here with OAuth');
-                });
-            });
-            
-            // Theme toggle
-            document.getElementById('theme-toggle').addEventListener('click', function() {
+            // Toggle theme
+            function toggleTheme() {
+                document.body.classList.toggle('light-mode');
                 if (document.body.classList.contains('light-mode')) {
-                    document.body.classList.remove('light-mode');
-                    this.innerHTML = '<i class="fas fa-moon"></i>';
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    document.body.classList.add('light-mode');
-                    this.innerHTML = '<i class="fas fa-sun"></i>';
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
                     localStorage.setItem('theme', 'light');
+                } else {
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'dark');
                 }
-            });
-            
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-mode');
-                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
             }
             
-            // Initialize with home page
-            showPage('home');
-        }
-        
-        // Function to show page
-        function showPage(page) {
-            if (page === 'home') {
-                document.getElementById('home-page').classList.remove('hidden');
-                document.getElementById('account-page').classList.add('hidden');
-                document.getElementById('results-container').style.display = 'none';
-            } else if (page === 'account') {
-                document.getElementById('account-page').classList.remove('hidden');
-                document.getElementById('home-page').classList.add('hidden');
+            // Show notification
+            function showNotification(message) {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 25px;
+                    background: var(--accent-gradient);
+                    color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    z-index: 1000;
+                    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
             }
-        }
-        
-        // Initialize when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp);
+        });
     </script>
 </body>
 </html>
