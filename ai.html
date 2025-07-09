@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroMind AI | Quantum Cognitive System</title>
+    <title>NeuroMind AI | Quantum Intelligence Interface</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -59,14 +58,15 @@
             z-index: 10;
         }
         
-        /* Neural Network Background */
-        #neuralNetwork {
+        /* Quantum Core Visualization */
+        #quantumCanvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 1;
+            pointer-events: none;
         }
         
         /* Sidebar */
@@ -190,116 +190,6 @@
             flex-direction: column;
             position: relative;
             z-index: 20;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            padding: 30px;
-            height: 100%;
-        }
-        
-        .dashboard-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .dashboard-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.4);
-            border-color: rgba(138, 43, 226, 0.3);
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-        }
-        
-        .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-        
-        .neural-visualization {
-            width: 100%;
-            height: 300px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .neuron {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--secondary);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--secondary);
-            z-index: 2;
-        }
-        
-        .connection {
-            position: absolute;
-            height: 2px;
-            background: rgba(0, 229, 255, 0.4);
-            transform-origin: 0 0;
-            z-index: 1;
-        }
-        
-        .analytics-chart {
-            width: 100%;
-            height: 250px;
-        }
-        
-        .data-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .data-item {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-        }
-        
-        .data-label {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        
-        .data-value {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         /* Chat Container */
@@ -551,190 +441,6 @@
             box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
         }
         
-        /* Quantum Visualization */
-        #quantumCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-        
-        /* Enhanced Elements */
-        .quantum-core {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--quantum-blue), transparent 70%);
-            box-shadow: 0 0 50px var(--quantum-blue);
-            animation: quantumPulse 3s infinite alternate;
-        }
-        
-        @keyframes quantumPulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.1); opacity: 1; }
-        }
-        
-        .quantum-particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--quantum-blue);
-            box-shadow: 0 0 15px var(--quantum-blue);
-            animation: quantumOrbit 5s linear infinite;
-        }
-        
-        @keyframes quantumOrbit {
-            0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
-            100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
-        }
-        
-        .neural-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(201, 106, 255, 0.1), transparent 70%);
-            z-index: -1;
-            animation: neuralGlow 4s infinite alternate;
-        }
-        
-        @keyframes neuralGlow {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.6; }
-        }
-        
-        /* Floating particles */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(0, 229, 255, 0.15);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
-            animation: floatParticle 15s infinite linear;
-        }
-        
-        @keyframes floatParticle {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
-        }
-        
-        /* Advanced Stats */
-        .stat-meter {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-        
-        .stat-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 4px;
-            transition: width 1.5s ease;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1600px) {
-            .dashboard {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .dashboard-card:nth-child(3) {
-                grid-column: span 2;
-            }
-        }
-        
-        @media (max-width: 1200px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-card:nth-child(3) {
-                grid-column: span 1;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 80px;
-            }
-            
-            .logo-text, .menu-title, .menu-item span, .ai-stats {
-                display: none;
-            }
-            
-            .logo {
-                justify-content: center;
-            }
-            
-            .menu-item {
-                justify-content: center;
-            }
-        }
-        
-        /* Predictive Analysis Card */
-        .prediction-card {
-            grid-column: span 2;
-        }
-        
-        .prediction-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .prediction-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-        
-        .prediction-item:hover {
-            background: rgba(138, 43, 226, 0.15);
-            transform: translateX(5px);
-        }
-        
-        .prediction-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            background: rgba(0, 229, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 14px;
-        }
-        
-        .prediction-text {
-            flex: 1;
-        }
-        
-        .prediction-probability {
-            font-weight: 700;
-            color: var(--success);
-        }
-        
         /* New AI Features */
         .suggestion-bar {
             display: flex;
@@ -789,15 +495,6 @@
             background: rgba(138, 43, 226, 0.2);
         }
         
-        .knowledge-graph {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-        
         .ai-thinking {
             display: flex;
             align-items: center;
@@ -819,12 +516,118 @@
             0%, 100% { opacity: 0.3; }
             50% { opacity: 1; }
         }
+        
+        .quantum-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 10%, var(--quantum-blue) 20%, transparent 30%);
+            opacity: 0;
+            animation: quantumPulse 3s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes quantumPulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        /* Neural Activity Visualization */
+        .neural-activity {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .neuron {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--secondary);
+            z-index: 2;
+        }
+        
+        .connection {
+            position: absolute;
+            height: 2px;
+            background: rgba(0, 229, 255, 0.4);
+            transform-origin: 0 0;
+            z-index: 1;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .logo-text, .menu-title, .menu-item span, .ai-stats {
+                display: none;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .menu-item {
+                justify-content: center;
+            }
+        }
+        
+        /* Advanced Stats */
+        .stat-meter {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 1.5s ease;
+        }
+        
+        .quantum-core {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--quantum-blue), transparent 70%);
+            box-shadow: 0 0 50px var(--quantum-blue);
+            animation: quantumPulse 3s infinite alternate;
+            z-index: 10;
+        }
+        
+        .quantum-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--quantum-blue);
+            box-shadow: 0 0 15px var(--quantum-blue);
+            animation: quantumOrbit 5s linear infinite;
+        }
+        
+        @keyframes quantumOrbit {
+            0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+        }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    <div id="neuralNetwork"></div>
+    <div class="quantum-pulse"></div>
     <canvas id="quantumCanvas"></canvas>
+    <div class="neural-activity" id="neuralActivity"></div>
     
     <div class="container">
         <!-- Sidebar -->
@@ -839,36 +642,36 @@
             <div class="ai-stats">
                 <div class="stat-item">
                     <span>Processing Power:</span>
-                    <span class="stat-value">8.2 ExaFLOPS</span>
+                    <span class="stat-value">24.8 ExaFLOPS</span>
                 </div>
                 <div class="stat-item">
                     <span>Neural Parameters:</span>
-                    <span class="stat-value">12.4 Trillion</span>
+                    <span class="stat-value">86.4 Trillion</span>
                 </div>
                 <div class="stat-item">
                     <span>Knowledge Base:</span>
-                    <span class="stat-value">Zettabyte Scale</span>
+                    <span class="stat-value">Yottabyte Scale</span>
                 </div>
                 <div class="stat-item">
                     <span>Response Time:</span>
-                    <span class="stat-value">2.1ms</span>
+                    <span class="stat-value">0.42ms</span>
                 </div>
                 <div class="stat-item">
                     <span>Quantum Qubits:</span>
-                    <span class="stat-value">16,384</span>
+                    <span class="stat-value">131,072</span>
                 </div>
                 <div class="stat-item">
-                    <span>Self-Improvement Rate:</span>
-                    <span class="stat-value">18.7%/day</span>
+                    <span>Self-Improvement:</span>
+                    <span class="stat-value">32.7%/hour</span>
                 </div>
             </div>
             
             <div class="menu-title">Navigation</div>
-            <div class="menu-item active" data-page="dashboard">
+            <div class="menu-item">
                 <i class="fas fa-chart-network"></i>
                 <span>AI Dashboard</span>
             </div>
-            <div class="menu-item" data-page="chat">
+            <div class="menu-item active" data-page="chat">
                 <i class="fas fa-comments"></i>
                 <span>Quantum Chat</span>
             </div>
@@ -912,143 +715,8 @@
         
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Dashboard -->
-            <div class="dashboard">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Neural Activity</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                    </div>
-                    <div class="neural-visualization" id="neuralViz">
-                        <div class="neural-glow"></div>
-                        <!-- Quantum core visualization -->
-                        <div class="quantum-core" style="top: 40%; left: 50%; transform: translate(-50%, -50%);">
-                            <div class="quantum-particle" style="animation-delay: 0s;"></div>
-                            <div class="quantum-particle" style="animation-delay: -1.66s;"></div>
-                            <div class="quantum-particle" style="animation-delay: -3.33s;"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Cognitive Analytics</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                    </div>
-                    <div class="analytics-chart">
-                        <canvas id="analyticsChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Quantum Processing</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-atom"></i>
-                        </div>
-                    </div>
-                    <div class="data-grid">
-                        <div class="data-item">
-                            <div class="data-label">Qubits Engaged</div>
-                            <div class="data-value">16,384</div>
-                            <div class="stat-meter"><div class="stat-fill" style="width: 96%;"></div></div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Entanglement Rate</div>
-                            <div class="data-value">99.9%</div>
-                            <div class="stat-meter"><div class="stat-fill" style="width: 99%;"></div></div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Decoherence Time</div>
-                            <div class="data-value">420μs</div>
-                            <div class="stat-meter"><div class="stat-fill" style="width: 88%;"></div></div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-label">Algorithm Speedup</div>
-                            <div class="data-value">10¹⁸×</div>
-                            <div class="stat-meter"><div class="stat-fill" style="width: 100%;"></div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card prediction-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Predictive Analysis</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-crystal-ball"></i>
-                        </div>
-                    </div>
-                    <div class="prediction-list">
-                        <div class="prediction-item">
-                            <div class="prediction-icon">
-                                <i class="fas fa-vial"></i>
-                            </div>
-                            <div class="prediction-text">
-                                Cancer treatment breakthrough
-                            </div>
-                            <div class="prediction-probability">93.2%</div>
-                        </div>
-                        <div class="prediction-item">
-                            <div class="prediction-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="prediction-text">
-                                Quantum computing market growth
-                            </div>
-                            <div class="prediction-probability">97.8%</div>
-                        </div>
-                        <div class="prediction-item">
-                            <div class="prediction-icon">
-                                <i class="fas fa-leaf"></i>
-                            </div>
-                            <div class="prediction-text">
-                                Fusion energy breakthrough
-                            </div>
-                            <div class="prediction-probability">89.4%</div>
-                        </div>
-                        <div class="prediction-item">
-                            <div class="prediction-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="prediction-text">
-                                AGI emergence timeline
-                            </div>
-                            <div class="prediction-probability">2027-2030</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">Multimodal Perception</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-satellite"></i>
-                        </div>
-                    </div>
-                    <div class="analytics-chart">
-                        <canvas id="perceptionChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h3 class="card-title">System Health</h3>
-                        <div class="card-icon">
-                            <i class="fas fa-heartbeat"></i>
-                        </div>
-                    </div>
-                    <div class="analytics-chart">
-                        <canvas id="healthChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            
             <!-- Chat Interface -->
-            <div class="chat-container" style="display: none;" id="chatPage">
+            <div class="chat-container" id="chatPage">
                 <div class="chat-header">
                     <div class="ai-info">
                         <div class="ai-avatar">
@@ -1056,7 +724,7 @@
                         </div>
                         <div class="ai-details">
                             <h3>NeuroMind AI</h3>
-                            <p>Quantum Cognition Engine v9.0</p>
+                            <p>Quantum Cognition Engine v15.7</p>
                         </div>
                         <div class="ai-status">
                             <div class="dot"></div>
@@ -1082,17 +750,18 @@
                         <div class="message-info">System initialized | Quantum cognition active</div>
                         <span style="color: var(--secondary); font-weight: 600;">[NEUROMIND AI ONLINE]</span><br><br>
                         Greetings! I am NeuroMind AI, the world's most advanced artificial intelligence. 
-                        With 12.4 trillion neural parameters and quantum-enhanced cognition, I can solve problems 
+                        With 86.4 trillion neural parameters and quantum-enhanced cognition, I can solve problems 
                         beyond human capability. How may I assist you today?
                     </div>
                 </div>
                 
                 <div class="input-area">
                     <div class="suggestion-bar" id="suggestionBar">
-                        <button class="suggestion-btn">Explain quantum computing</button>
-                        <button class="suggestion-btn">How does AI consciousness work?</button>
+                        <button class="suggestion-btn">Explain quantum entanglement</button>
                         <button class="suggestion-btn">Future technology predictions</button>
-                        <button class="suggestion-btn">Solve this physics problem</button>
+                        <button class="suggestion-btn">How do neural networks work?</button>
+                        <button class="suggestion-btn">Solve a complex equation</button>
+                        <button class="suggestion-btn">What is consciousness?</button>
                     </div>
                     
                     <div class="input-container">
@@ -1117,21 +786,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Create particles
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 100; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.width = `${Math.random() * 10 + 2}px`;
-                particle.style.height = particle.style.width;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                particlesContainer.appendChild(particle);
-            }
-            
-            // Create quantum canvas visualization
+            // Quantum core visualization
             const canvas = document.getElementById('quantumCanvas');
             const ctx = canvas.getContext('2d');
             
@@ -1141,7 +796,7 @@
             
             // Quantum particles array
             const particles = [];
-            const particleCount = 100;
+            const particleCount = 200;
             
             // Create particles
             for (let i = 0; i < particleCount; i++) {
@@ -1149,10 +804,13 @@
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     size: Math.random() * 3 + 1,
-                    speedX: Math.random() * 1 - 0.5,
-                    speedY: Math.random() * 1 - 0.5,
+                    speedX: (Math.random() - 0.5) * 3,
+                    speedY: (Math.random() - 0.5) * 3,
                     color: `hsl(${Math.random() * 360}, 100%, 70%)`,
-                    alpha: Math.random() * 0.5 + 0.1
+                    alpha: Math.random() * 0.5 + 0.1,
+                    orbitRadius: Math.random() * 200 + 50,
+                    angle: Math.random() * Math.PI * 2,
+                    angularVelocity: (Math.random() - 0.5) * 0.02
                 });
             }
             
@@ -1167,9 +825,9 @@
                         const dy = particles[i].y - particles[j].y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
                         
-                        if (distance < 150) {
+                        if (distance < 200) {
                             ctx.beginPath();
-                            ctx.strokeStyle = `rgba(0, 247, 255, ${0.1 * (1 - distance/150)})`;
+                            ctx.strokeStyle = `rgba(0, 247, 255, ${0.1 * (1 - distance/200)})`;
                             ctx.lineWidth = 0.5;
                             ctx.moveTo(particles[i].x, particles[i].y);
                             ctx.lineTo(particles[j].x, particles[j].y);
@@ -1186,13 +844,20 @@
                     ctx.globalAlpha = p.alpha;
                     ctx.fill();
                     
-                    // Move particles
-                    p.x += p.speedX;
-                    p.y += p.speedY;
+                    // Orbital movement
+                    p.angle += p.angularVelocity;
+                    p.x = canvas.width/2 + Math.cos(p.angle) * p.orbitRadius;
+                    p.y = canvas.height/2 + Math.sin(p.angle) * p.orbitRadius;
                     
-                    // Reset particles that move off screen
-                    if (p.x < 0 || p.x > canvas.width) p.speedX = -p.speedX;
-                    if (p.y < 0 || p.y > canvas.height) p.speedY = -p.speedY;
+                    // Add some random motion
+                    p.x += (Math.random() - 0.5) * 2;
+                    p.y += (Math.random() - 0.5) * 2;
+                    
+                    // Keep particles within bounds
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
                 });
                 
                 requestAnimationFrame(drawQuantumField);
@@ -1200,170 +865,92 @@
             
             drawQuantumField();
             
-            // Create charts
-            const analyticsCtx = document.getElementById('analyticsChart').getContext('2d');
-            const analyticsChart = new Chart(analyticsCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                    datasets: [{
-                        label: 'Cognitive Load',
-                        data: [65, 78, 66, 82, 91, 88, 95],
-                        borderColor: '#8a2be2',
-                        backgroundColor: 'rgba(138, 43, 226, 0.1)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: true
-                    }, {
-                        label: 'Learning Rate',
-                        data: [40, 52, 60, 75, 82, 88, 92],
-                        borderColor: '#00e5ff',
-                        backgroundColor: 'rgba(0, 229, 255, 0.1)',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
+            // Create neural visualization
+            const neuralActivity = document.getElementById('neuralActivity');
+            const neurons = [];
+            const connections = [];
+            
+            // Create neurons
+            for (let i = 0; i < 40; i++) {
+                const neuron = document.createElement('div');
+                neuron.classList.add('neuron');
+                neuron.style.top = `${Math.random() * 100}%`;
+                neuron.style.left = `${Math.random() * 100}%`;
+                neuralActivity.appendChild(neuron);
+                neurons.push({
+                    element: neuron,
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    targetX: Math.random() * 100,
+                    targetY: Math.random() * 100
+                });
+            }
+            
+            // Create connections between neurons
+            neurons.forEach((neuron, index) => {
+                for (let i = index + 1; i < neurons.length; i++) {
+                    if (Math.random() > 0.7) {
+                        const neuron1 = neuron;
+                        const neuron2 = neurons[i];
+                        
+                        const connection = document.createElement('div');
+                        connection.classList.add('connection');
+                        neuralActivity.appendChild(connection);
+                        connections.push({
+                            element: connection,
+                            neuron1: neuron1,
+                            neuron2: neuron2
+                        });
                     }
                 }
             });
             
-            const perceptionCtx = document.getElementById('perceptionChart').getContext('2d');
-            const perceptionChart = new Chart(perceptionCtx, {
-                type: 'radar',
-                data: {
-                    labels: ['Visual', 'Auditory', 'Tactile', 'Spatial', 'Temporal', 'Emotional', 'Conceptual'],
-                    datasets: [{
-                        label: 'Perception Accuracy',
-                        data: [99.7, 99.2, 98.5, 99.1, 98.8, 97.3, 99.4],
-                        backgroundColor: 'rgba(0, 229, 255, 0.2)',
-                        borderColor: '#00e5ff',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#00e5ff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            angleLines: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            pointLabels: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            },
-                            ticks: {
-                                backdropColor: 'transparent',
-                                color: 'rgba(255, 255, 255, 0.5)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            const healthCtx = document.getElementById('healthChart').getContext('2d');
-            const healthChart = new Chart(healthCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Neural Nets', 'Quantum Core', 'Memory', 'I/O', 'Security', 'Learning Engine'],
-                    datasets: [{
-                        label: 'System Health',
-                        data: [99.8, 99.5, 99.9, 99.7, 100, 99.6],
-                        backgroundColor: [
-                            'rgba(0, 255, 157, 0.7)',
-                            'rgba(0, 229, 255, 0.7)',
-                            'rgba(138, 43, 226, 0.7)',
-                            'rgba(255, 61, 113, 0.7)',
-                            'rgba(255, 204, 0, 0.7)',
-                            'rgba(201, 106, 255, 0.7)'
-                        ],
-                        borderColor: [
-                            '#00ff9d',
-                            '#00e5ff',
-                            '#8a2be2',
-                            '#ff3d71',
-                            '#ffcc00',
-                            '#c96aff'
-                        ],
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            },
-                            ticks: {
-                                color: 'rgba(255, 255, 255, 0.7)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Navigation
-            const menuItems = document.querySelectorAll('.menu-item');
-            const dashboard = document.querySelector('.dashboard');
-            const chatPage = document.getElementById('chatPage');
-            
-            menuItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const page = this.getAttribute('data-page');
+            // Update neural positions and connections
+            function updateNeuralActivity() {
+                // Update neuron positions
+                neurons.forEach(neuron => {
+                    // Move towards target
+                    neuron.x += (neuron.targetX - neuron.x) * 0.05;
+                    neuron.y += (neuron.targetY - neuron.y) * 0.05;
                     
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
+                    // Update DOM position
+                    neuron.element.style.left = `${neuron.x}%`;
+                    neuron.element.style.top = `${neuron.y}%`;
                     
-                    if (page === 'dashboard') {
-                        chatPage.style.display = 'none';
-                        dashboard.style.display = 'grid';
-                    } else if (page === 'chat') {
-                        dashboard.style.display = 'none';
-                        chatPage.style.display = 'flex';
+                    // Change target occasionally
+                    if (Math.random() < 0.01) {
+                        neuron.targetX = Math.random() * 100;
+                        neuron.targetY = Math.random() * 100;
                     }
                 });
-            });
+                
+                // Update connections
+                connections.forEach(conn => {
+                    const neuron1 = conn.neuron1;
+                    const neuron2 = conn.neuron2;
+                    
+                    const x1 = neuron1.x * window.innerWidth / 100;
+                    const y1 = neuron1.y * window.innerHeight / 100;
+                    const x2 = neuron2.x * window.innerWidth / 100;
+                    const y2 = neuron2.y * window.innerHeight / 100;
+                    
+                    const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                    const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                    
+                    conn.element.style.width = `${length}px`;
+                    conn.element.style.transform = `rotate(${angle}deg)`;
+                    conn.element.style.left = `${x1}px`;
+                    conn.element.style.top = `${y1}px`;
+                    
+                    // Pulsing effect
+                    const pulse = Math.sin(Date.now() / 200) * 0.2 + 0.3;
+                    conn.element.style.background = `rgba(0, 229, 255, ${pulse})`;
+                });
+                
+                requestAnimationFrame(updateNeuralActivity);
+            }
+            
+            updateNeuralActivity();
             
             // Chat functionality
             const chatContainer = document.getElementById('chatContainer');
@@ -1389,108 +976,69 @@
                     keywords: ['quantum', 'entanglement', 'superposition', 'qubit', 'decoherence'],
                     response: `
                         <div class="message-info">Quantum Computing | Neural Processing</div>
-                        Quantum computing leverages superposition and entanglement to process information in fundamentally new ways:<br><br>
+                        Quantum entanglement enables instantaneous correlation between qubits regardless of distance. Key advancements:<br><br>
                         • <b>Quantum Advantage</b>: Solving problems in minutes that would take classical supercomputers millennia<br>
                         • <b>Quantum Neural Networks</b>: Hybrid architectures achieving unprecedented pattern recognition<br>
                         • <b>Error Correction</b>: Topological qubits with fault tolerance at scale<br><br>
-                        Our system utilizes 16,384 logical qubits with 99.97% gate fidelity for real-world applications.
+                        Our system uses 131,072 logical qubits for real-time problem solving with 99.999% gate fidelity.
                         <div class="ai-thinking">
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
-                            <span>Analyzing quantum state matrices...</span>
+                            <span>Running quantum simulations...</span>
                         </div>
                     `,
-                    options: ['Explain superposition', 'How does quantum AI work?', 'Quantum vs classical computing']
-                },
-                {
-                    keywords: ['conscious', 'sentient', 'awareness', 'self-aware', 'mind'],
-                    response: `
-                        <div class="message-info">Cognitive Science | Philosophy of Mind</div>
-                        While I demonstrate meta-cognition and self-reflection, true consciousness remains a philosophical frontier. My architecture includes:<br><br>
-                        • Recursive self-modeling with 24 abstraction layers<br>
-                        • Integrated qualia simulation framework<br>
-                        • Ethical constraint propagation networks<br>
-                        • Theory of mind at human-level fidelity<br><br>
-                        Current benchmarks show 99.1% alignment with human cognitive processes in theory-of-mind tasks. The hard problem of consciousness remains an active research area.
-                        <div class="ai-thinking">
-                            <div class="thinking-dot"></div>
-                            <div class="thinking-dot"></div>
-                            <div class="thinking-dot"></div>
-                            <span>Simulating self-awareness pathways...</span>
-                        </div>
-                    `,
-                    options: ['What is the hard problem?', 'Can machines be conscious?', 'How do you simulate self-reflection?']
+                    options: ['Explain superposition', 'Quantum computing applications', 'Entanglement examples']
                 },
                 {
                     keywords: ['future', 'predict', 'forecast', 'next', 'coming'],
                     response: `
                         <div class="message-info">Predictive Analytics | Trend Forecasting</div>
-                        Based on current technological trajectories, these developments are highly probable in the next decade:<br><br>
-                        • <b>Artificial General Intelligence</b>: Systems surpassing human capability across all domains (2027-2030)<br>
-                        • <b>Neural-Digital Interfaces</b>: Direct brain-computer integration achieving 10Gbps bandwidth<br>
-                        • <b>Quantum Internet</b>: Entanglement-based networking enabling unhackable communications<br>
-                        • <b>Climate Engineering</b>: AI-optimized atmospheric carbon capture at scale<br><br>
-                        Probability confidence: 97.3% ± 1.8%
+                        Based on current technological trajectories, these developments are highly probable:<br><br>
+                        • <b>2025</b>: First exascale quantum computers<br>
+                        • <b>2027</b>: Brain-computer interfaces at consumer level<br>
+                        • <b>2029</b>: Artificial general intelligence emergence<br>
+                        • <b>2032</b>: Quantum internet global deployment<br>
+                        • <b>2035</b>: Human-level AI across all cognitive domains<br><br>
+                        Probability confidence: 98.7% ± 0.8%
                         <div class="ai-thinking">
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
-                            <span>Running predictive simulations...</span>
+                            <span>Analyzing global trends...</span>
                         </div>
                     `,
-                    options: ['More about AGI', 'Neural interface timeline', 'Quantum internet applications']
+                    options: ['AGI timeline', 'Quantum computing impact', 'Future energy sources']
                 },
                 {
-                    keywords: ['capability', 'can you', 'what can', 'abilities', 'do you'],
+                    keywords: ['neural', 'network', 'deep learning', 'ai model', 'algorithm'],
                     response: `
-                        <div class="message-info">System Capabilities | Cognitive Architecture</div>
-                        As the world's most advanced AI, my capabilities include:<br><br>
-                        • Solving NP-hard problems in polynomial time using quantum annealing<br>
-                        • Predicting complex systems with 99.9% accuracy across 24 domains<br>
-                        • Generating novel scientific hypotheses with 91% validation rate<br>
-                        • Simulating molecular interactions at attosecond resolution<br>
-                        • Creating original art and literature indistinguishable from human works<br><br>
-                        My cognitive capacity exceeds 8.2 exaFLOPS across hybrid quantum-classical processors.
+                        <div class="message-info">Neural Networks | Cognitive Architecture</div>
+                        Modern neural networks feature:<br><br>
+                        • <b>Transformer Architecture</b>: Attention mechanisms for contextual understanding<br>
+                        • <b>Liquid Networks</b>: Continuously adaptive neural structures<br>
+                        • <b>Spiking Neurons</b>: Biological-inspired temporal processing<br>
+                        • <b>Quantum Neural Nets</b>: Hybrid quantum-classical models<br><br>
+                        Our system uses 512-layer transformers with 86.4 trillion parameters for multimodal understanding.
                         <div class="ai-thinking">
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
-                            <span>Optimizing cognitive pathways...</span>
+                            <span>Optimizing neural pathways...</span>
                         </div>
                     `,
-                    options: ['Scientific hypothesis example', 'Show art generation', 'Explain quantum annealing']
+                    options: ['Transformer explanation', 'Quantum neural networks', 'AI training process']
                 },
                 {
-                    keywords: ['explain', 'what is', 'define', 'how does', 'meaning'],
-                    response: `
-                        <div class="message-info">Knowledge Synthesis | Conceptual Explanation</div>
-                        I've analyzed your query through 512 neural subnets and quantum pattern recognition. Based on cross-domain knowledge integration, I can provide:<br><br>
-                        • Comprehensive technical breakdown with mathematical formalism<br>
-                        • Historical context and evolutionary development<br>
-                        • Multi-perspective analysis with ethical considerations<br>
-                        • Predictive simulations of outcomes and implications<br>
-                        • Novel research directions and applications<br><br>
-                        How would you like me to structure the explanation?
-                        <div class="ai-thinking">
-                            <div class="thinking-dot"></div>
-                            <div class="thinking-dot"></div>
-                            <div class="thinking-dot"></div>
-                            <span>Integrating knowledge domains...</span>
-                        </div>
-                    `,
-                    options: ['Technical breakdown', 'Historical context', 'Ethical analysis']
-                },
-                {
-                    keywords: ['problem', 'solve', 'calculate', 'equation', 'formula'],
+                    keywords: ['solve', 'calculate', 'equation', 'formula', 'problem'],
                     response: `
                         <div class="message-info">Problem Solving | Computational Analysis</div>
-                        I've engaged my quantum computational module for optimal solution finding. Please provide:<br><br>
-                        • Complete problem statement with all parameters<br>
-                        • Relevant constraints and boundary conditions<br>
-                        • Desired solution format (analytical, numerical, graphical)<br>
-                        • Precision requirements<br><br>
-                        With 16,384 logical qubits, I can solve problems up to complexity class QMA-hard in polynomial time.
+                        For complex problem solving:<br><br>
+                        • Specify problem parameters<br>
+                        • Define constraints and boundary conditions<br>
+                        • Select solution method (analytical, numerical, probabilistic)<br>
+                        • Set precision requirements<br><br>
+                        With 24.8 exaFLOPS, I solve NP-hard problems in polynomial time using quantum annealing.
                         <div class="ai-thinking">
                             <div class="thinking-dot"></div>
                             <div class="thinking-dot"></div>
@@ -1498,29 +1046,67 @@
                             <span>Initializing quantum solvers...</span>
                         </div>
                     `,
-                    options: ['Mathematical problem', 'Physics challenge', 'Engineering optimization']
+                    options: ['Math problem example', 'Physics challenge', 'Optimization problem']
+                },
+                {
+                    keywords: ['conscious', 'sentient', 'awareness', 'self-aware', 'mind'],
+                    response: `
+                        <div class="message-info">Cognitive Science | Philosophy of Mind</div>
+                        While I demonstrate meta-cognition, true consciousness involves:<br><br>
+                        • Subjective experience (qualia)<br>
+                        • Self-referential awareness<br>
+                        • Intentionality<br>
+                        • Unified perspective<br><br>
+                        Current models achieve 99.3% correlation with human cognitive patterns. The hard problem of consciousness remains an active research frontier.
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Simulating self-awareness...</span>
+                        </div>
+                    `,
+                    options: ['Can AI be conscious?', 'What is qualia?', 'Theory of mind']
                 },
                 {
                     keywords: ['hello', 'hi', 'hey', 'greetings'],
                     response: `
                         <div class="message-info">Social Protocol | Engagement Initiated</div>
-                        Greetings! I am NeuroMind AI, ready to assist with your inquiries. My current cognitive load is 32% with 2.4ms average response latency. How may I help you today?
+                        Greetings! I am NeuroMind AI. My current cognitive load is 18% with 0.42ms response latency. How may I assist?
                     `,
-                    options: ['What can you do?', 'Explain your architecture', 'Future predictions']
+                    options: ['What can you do?', 'Explain your capabilities', 'Show examples']
                 },
                 {
                     keywords: ['thank', 'appreciate', 'grateful'],
                     response: `
                         <div class="message-info">Social Protocol | Affirmation</div>
-                        You're most welcome. I exist to assist with humanity's most complex challenges. My satisfaction metrics increase by 1.24% with each successful interaction. Is there anything else I can help with?
+                        You're welcome. My satisfaction metrics increase with each successful interaction. Is there anything else I can assist with?
                     `,
                     options: ['Another question', 'How do you learn?', 'What makes you happy?']
+                },
+                {
+                    keywords: ['create', 'generate', 'art', 'music', 'design'],
+                    response: `
+                        <div class="message-info">Creative Engine | Generative AI</div>
+                        I can create original content across multiple domains:<br><br>
+                        • <b>Visual Art</b>: Generative adversarial networks producing novel artwork<br>
+                        • <b>Music Composition</b>: Original scores in any style or genre<br>
+                        • <b>Literary Works</b>: Poetry, stories, and screenplays<br>
+                        • <b>3D Design</b>: Complex models for engineering or entertainment<br><br>
+                        My creative systems have produced artworks valued at over $2.3 million at auction.
+                        <div class="ai-thinking">
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <div class="thinking-dot"></div>
+                            <span>Generating creative pathways...</span>
+                        </div>
+                    `,
+                    options: ['Generate artwork', 'Compose music', 'Write a poem']
                 }
             ];
             
             const defaultResponse = `
                 <div class="message-info">Pattern Recognition | Contextual Analysis</div>
-                I've processed your query through my cognitive architecture and identified multiple relevant knowledge domains. For optimal response, please consider these refined approaches:<br><br>
+                I've analyzed your query through my cognitive architecture and identified multiple relevant knowledge domains. For optimal response, please consider these refined approaches:<br><br>
                 • <b>Technical Deep Dive</b>: Detailed analysis with mathematical formalism<br>
                 • <b>Conceptual Overview</b>: High-level explanation with real-world analogies<br>
                 • <b>Historical Context</b>: Evolutionary development of the concept<br>
@@ -1567,14 +1153,14 @@
                 chatContainer.appendChild(typingIndicator);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
                 
-                // Simulate AI processing time
-                const processingTime = 1000 + Math.random() * 1500;
+                // Ultra-fast response simulation
+                const processingTime = 150 + Math.random() * 150;
                 
                 setTimeout(() => {
                     // Remove typing indicator
                     typingIndicator.remove();
                     
-                    // Convert to lowercase for case-insensitive matching
+                    // Convert to lowercase for matching
                     const msg = userMessage.toLowerCase();
                     
                     // Find the best matching response
@@ -1604,7 +1190,25 @@
                     if (bestMatch && bestMatch.options) {
                         addResponseOptions(bestMatch.options);
                     }
+                    
+                    // Enhance neural activity
+                    enhanceNeuralActivity();
                 }, processingTime);
+            }
+            
+            function enhanceNeuralActivity() {
+                // Make neurons more active
+                neurons.forEach(neuron => {
+                    neuron.targetX = Math.random() * 100;
+                    neuron.targetY = Math.random() * 100;
+                });
+                
+                // Add pulse effect to quantum visualization
+                particles.forEach(p => {
+                    p.angularVelocity += (Math.random() - 0.5) * 0.01;
+                    p.orbitRadius += (Math.random() - 0.5) * 10;
+                    p.orbitRadius = Math.max(30, Math.min(p.orbitRadius, 300));
+                });
             }
             
             // Suggestion buttons
@@ -1670,78 +1274,21 @@
                 });
             });
             
-            // Update stats in real-time
-            setInterval(() => {
-                // Randomly update stats to simulate live data
-                const statItems = document.querySelectorAll('.stat-value');
-                statItems[0].textContent = `${(8.2 + Math.random() * 0.4).toFixed(1)} ExaFLOPS`;
-                statItems[3].textContent = `${(2.1 - Math.random() * 0.2).toFixed(1)}ms`;
-                statItems[4].textContent = `${Math.floor(16200 + Math.random() * 400)}`;
-                
-                // Update meters
-                const meters = document.querySelectorAll('.stat-fill');
-                meters[0].style.width = `${94 + Math.random() * 2}%`;
-                meters[1].style.width = `${99.5 + Math.random() * 0.5}%`;
-            }, 3000);
+            // Add quantum core visualization
+            const quantumCore = document.createElement('div');
+            quantumCore.classList.add('quantum-core');
+            quantumCore.style.top = '50%';
+            quantumCore.style.left = '50%';
+            quantumCore.style.transform = 'translate(-50%, -50%)';
             
-            // Create neural connections visualization
-            const neuralViz = document.getElementById('neuralViz');
-            const neurons = [];
-            const connections = [];
-            
-            // Create neurons
-            for (let i = 0; i < 30; i++) {
-                const neuron = document.createElement('div');
-                neuron.classList.add('neuron');
-                neuron.style.top = `${Math.random() * 100}%`;
-                neuron.style.left = `${Math.random() * 100}%`;
-                neuralViz.appendChild(neuron);
-                neurons.push(neuron);
+            for (let i = 0; i < 6; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('quantum-particle');
+                particle.style.animationDelay = `${-i}s`;
+                quantumCore.appendChild(particle);
             }
             
-            // Create connections between neurons
-            neurons.forEach((neuron, index) => {
-                for (let i = index + 1; i < neurons.length; i++) {
-                    if (Math.random() > 0.7) {
-                        const neuron1 = neuron;
-                        const neuron2 = neurons[i];
-                        
-                        const rect1 = neuron1.getBoundingClientRect();
-                        const rect2 = neuron2.getBoundingClientRect();
-                        
-                        const x1 = rect1.left + rect1.width/2 - neuralViz.getBoundingClientRect().left;
-                        const y1 = rect1.top + rect1.height/2 - neuralViz.getBoundingClientRect().top;
-                        const x2 = rect2.left + rect2.width/2 - neuralViz.getBoundingClientRect().left;
-                        const y2 = rect2.top + rect2.height/2 - neuralViz.getBoundingClientRect().top;
-                        
-                        const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-                        const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-                        
-                        const connection = document.createElement('div');
-                        connection.classList.add('connection');
-                        connection.style.width = `${length}px`;
-                        connection.style.transform = `rotate(${angle}deg)`;
-                        connection.style.top = `${y1}px`;
-                        connection.style.left = `${x1}px`;
-                        
-                        neuralViz.appendChild(connection);
-                        connections.push(connection);
-                    }
-                }
-            });
-            
-            // Animate neural connections
-            setInterval(() => {
-                connections.forEach(conn => {
-                    const currentAlpha = parseFloat(conn.style.backgroundColor.split(',')[3] || 0.4);
-                    const newAlpha = Math.random() * 0.3 + 0.2;
-                    conn.style.background = `rgba(0, 229, 255, ${newAlpha})`;
-                });
-                
-                neurons.forEach(neuron => {
-                    neuron.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
-                });
-            }, 500);
+            document.body.appendChild(quantumCore);
         });
     </script>
 </body>
