@@ -392,6 +392,100 @@
             border-color: var(--ai-color);
         }
         
+        /* AI Results */
+        .ai-results {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            display: none;
+        }
+        
+        .ai-results-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .ai-icon {
+            font-size: 1.8rem;
+            color: var(--ai-color);
+        }
+        
+        .ai-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .ai-response {
+            background-color: var(--tertiary-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--ai-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .ai-response-content {
+            color: var(--text-primary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-response-content p {
+            margin-bottom: 1rem;
+        }
+        
+        .ai-response-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-response-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .ai-follow-up {
+            margin-top: 1.5rem;
+        }
+        
+        .ai-follow-up-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--ai-color);
+        }
+        
+        .ai-questions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .ai-question {
+            padding: 0.8rem 1.2rem;
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        
+        .ai-question:hover {
+            background-color: var(--ai-color);
+            color: white;
+            border-color: var(--ai-color);
+        }
+        
         /* Search Results */
         .results-container {
             width: 100%;
@@ -501,145 +595,6 @@
             margin-top: 0.8rem;
         }
         
-        .bookmark-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        
-        .bookmark-btn:hover, .bookmark-btn.bookmarked {
-            color: var(--accent-color);
-        }
-        
-        /* AI Assistant Section */
-        .ai-assistant {
-            width: 100%;
-            max-width: 800px;
-            margin: 2rem auto;
-            background-color: var(--secondary-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px var(--shadow-color);
-            overflow: hidden;
-            display: none;
-        }
-        
-        .ai-header {
-            background: linear-gradient(45deg, var(--ai-color), #6a11cb);
-            color: white;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .ai-icon {
-            font-size: 1.8rem;
-        }
-        
-        .ai-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .ai-body {
-            padding: 1.5rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
-        .message-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .message {
-            max-width: 85%;
-            padding: 1rem 1.5rem;
-            border-radius: 18px;
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        .user-message {
-            background-color: var(--user-color);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .ai-message {
-            background-color: var(--tertiary-bg);
-            color: var(--text-primary);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        
-        .ai-message::before {
-            content: '';
-            position: absolute;
-            left: -10px;
-            top: 0;
-            border-width: 0 10px 10px 0;
-            border-style: solid;
-            border-color: transparent var(--tertiary-bg) transparent transparent;
-        }
-        
-        .user-message::before {
-            content: '';
-            position: absolute;
-            right: -10px;
-            top: 0;
-            border-width: 0 0 10px 10px;
-            border-style: solid;
-            border-color: transparent transparent transparent var(--user-color);
-        }
-        
-        .ai-input-container {
-            display: flex;
-            padding: 1rem;
-            border-top: 1px solid var(--border-color);
-            background-color: var(--tertiary-bg);
-        }
-        
-        .ai-input {
-            flex: 1;
-            padding: 0.8rem 1.2rem;
-            border-radius: 25px;
-            border: 1px solid var(--border-color);
-            background-color: var(--secondary-bg);
-            color: var(--text-primary);
-            outline: none;
-            font-size: 1rem;
-        }
-        
-        .ai-input:focus {
-            border-color: var(--ai-color);
-        }
-        
-        .ai-send-btn {
-            background-color: var(--ai-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            margin-left: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .ai-send-btn:hover {
-            transform: scale(1.05);
-            background-color: #7b3fe4;
-        }
-        
         /* Quick Answer */
         .quick-answer {
             background-color: var(--tertiary-bg);
@@ -649,19 +604,11 @@
             border-left: 4px solid var(--accent-color);
         }
         
-        .quick-answer.ai-answer {
-            border-left: 4px solid var(--ai-color);
-        }
-        
         .quick-answer-title {
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 0.8rem;
             color: var(--accent-color);
-        }
-        
-        .ai-answer .quick-answer-title {
-            color: var(--ai-color);
         }
         
         .quick-answer-content {
@@ -1008,15 +955,12 @@
                 padding: 1.5rem;
             }
             
-            .result-grid,
-            .image-grid,
-            .video-grid,
-            .news-grid {
+            .result-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
             
-            .message {
-                max-width: 90%;
+            .ai-questions {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -1119,7 +1063,7 @@
     
     <!-- AI Assistant Panel -->
     <div class="ai-assistant" id="ai-assistant">
-        <div class="ai-header">
+        <div class="ai-results-header">
             <div class="ai-icon">
                 <i class="fas fa-robot"></i>
             </div>
@@ -1127,19 +1071,28 @@
                 MineFamily AI Assistant
             </div>
         </div>
-        <div class="ai-body" id="ai-chat">
-            <div class="message-container" id="ai-messages">
-                <div class="message ai-message">
-                    <p>Hello! I'm your AI assistant. How can I help you today?</p>
-                    <p>You can ask me questions about privacy, search techniques, or anything else!</p>
+        <div class="ai-response">
+            <div class="ai-response-content">
+                <p>Hello! I'm your AI assistant powered by advanced natural language processing. I can help you with:</p>
+                <ul>
+                    <li>Answering complex questions</li>
+                    <li>Researching topics</li>
+                    <li>Summarizing information</li>
+                    <li>Privacy-related advice</li>
+                    <li>And much more!</li>
+                </ul>
+                <p>Ask me anything in the search box below and I'll provide a comprehensive, privacy-focused response.</p>
+            </div>
+            
+            <div class="ai-follow-up">
+                <div class="ai-follow-up-title">Try asking:</div>
+                <div class="ai-questions">
+                    <button class="ai-question" data-question="How does private search work?">How does private search work?</button>
+                    <button class="ai-question" data-question="Explain quantum computing">Explain quantum computing</button>
+                    <button class="ai-question" data-question="Benefits of using a VPN">Benefits of using a VPN</button>
+                    <button class="ai-question" data-question="How to protect my online privacy">How to protect my online privacy</button>
                 </div>
             </div>
-        </div>
-        <div class="ai-input-container">
-            <input type="text" class="ai-input" id="ai-input" placeholder="Ask me anything...">
-            <button class="ai-send-btn" id="ai-send-btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
         </div>
     </div>
     
@@ -1186,7 +1139,7 @@
                     <div class="result-count" id="result-count">About 0 results</div>
                 </div>
                 <div id="quick-answer"></div>
-                <div id="results-list"></div>
+                <div class="result-grid" id="web-results"></div>
                 <div class="pagination" id="pagination"></div>
             </div>
         </div>
@@ -1304,6 +1257,10 @@
         const ACCOUNTS_KEY = 'minefamily_accounts';
         const SEARCH_HISTORY_KEY = 'minefamily_search_history';
         const RESULTS_PER_PAGE = 5;
+        
+        // Current search state
+        let currentSearchType = 'web';
+        let aiActive = false;
         
         // Initialize accounts and search history
         function initAccounts() {
@@ -1425,7 +1382,7 @@
         
         // Display search results with pagination
         function displayResults(searchData, page = 1) {
-            const resultsContainer = document.getElementById('results-list');
+            const resultsContainer = document.getElementById('web-results');
             const countContainer = document.getElementById('result-count');
             const paginationContainer = document.getElementById('pagination');
             const quickAnswerContainer = document.getElementById('quick-answer');
@@ -1548,103 +1505,207 @@
         function toggleAIAssistant() {
             const aiPanel = document.getElementById('ai-assistant');
             aiPanel.style.display = aiPanel.style.display === 'block' ? 'none' : 'block';
+            aiActive = !aiActive;
+            
+            if (aiActive) {
+                document.getElementById('ai-assistant-btn').innerHTML = '<i class="fas fa-robot"></i> Hide AI';
+            } else {
+                document.getElementById('ai-assistant-btn').innerHTML = '<i class="fas fa-robot"></i> AI Assistant';
+            }
         }
         
-        function sendAIMessage() {
-            const input = document.getElementById('ai-input');
-            const message = input.value.trim();
+        function generateAIResponse(query) {
+            // Predefined responses based on keywords
+            const lowerQuery = query.toLowerCase();
             
-            if (!message) return;
+            if (lowerQuery.includes('private search') || lowerQuery.includes('privacy')) {
+                return {
+                    content: `
+                        <p>Private search is a method of searching the internet without your queries being tracked or stored by search engines. MineFamily uses several techniques to protect your privacy:</p>
+                        
+                        <ul>
+                            <li><strong>No Tracking:</strong> We don't track your searches or create a profile of your interests</li>
+                            <li><strong>No Personalization:</strong> Results aren't filtered based on your search history or location</li>
+                            <li><strong>Encryption:</strong> All searches are encrypted to prevent eavesdropping</li>
+                            <li><strong>No Cookies:</strong> We don't use tracking cookies to follow you across the web</li>
+                        </ul>
+                        
+                        <p>This approach ensures that your search history remains private and can't be used to target you with ads or influence your search results.</p>
+                    `,
+                    followUp: [
+                        "How is private search different from incognito mode?",
+                        "Can private search prevent all tracking?",
+                        "How does MineFamily make money without ads?",
+                        "Is private search legal in all countries?"
+                    ]
+                };
+            }
             
-            // Add user message
-            addAIMessage(message, 'user');
+            if (lowerQuery.includes('ai assistant') || lowerQuery.includes('artificial intelligence')) {
+                return {
+                    content: `
+                        <p>MineFamily's AI assistant is powered by advanced natural language processing and machine learning algorithms. It works by:</p>
+                        
+                        <ol>
+                            <li>Analyzing your query to understand its intent and context</li>
+                            <li>Searching its knowledge base for relevant information</li>
+                            <li>Generating a comprehensive response using language models</li>
+                            <li>Providing sources and additional questions for deeper exploration</li>
+                        </ol>
+                        
+                        <p>The AI is designed to respect your privacy - it doesn't store your queries or use them for training purposes. All interactions are processed anonymously and deleted after your session ends.</p>
+                        
+                        <p>Our AI can help with complex questions, research tasks, summarization, and privacy-related advice.</p>
+                    `,
+                    followUp: [
+                        "What can I ask the AI assistant?",
+                        "How does the AI protect my privacy?",
+                        "Can the AI browse the internet?",
+                        "What are the limitations of the AI?"
+                    ]
+                };
+            }
             
-            // Clear input
-            input.value = '';
+            if (lowerQuery.includes('quantum computing')) {
+                return {
+                    content: `
+                        <p>Quantum computing is an emerging field that uses principles of quantum mechanics to process information. Unlike classical computers that use bits (0s and 1s), quantum computers use quantum bits or qubits that can exist in multiple states simultaneously.</p>
+                        
+                        <p>Key features of quantum computing:</p>
+                        
+                        <ul>
+                            <li><strong>Superposition:</strong> Qubits can be in multiple states at once</li>
+                            <li><strong>Entanglement:</strong> Qubits can be linked together, changing one affects others instantly</li>
+                            <li><strong>Quantum Tunneling:</strong> Ability to pass through energy barriers</li>
+                        </ul>
+                        
+                        <p>Potential applications include:</p>
+                        
+                        <ul>
+                            <li>Drug discovery and molecular modeling</li>
+                            <li>Optimization problems in logistics and finance</li>
+                            <li>Advanced cryptography and cybersecurity</li>
+                            <li>Artificial intelligence and machine learning acceleration</li>
+                        </ul>
+                        
+                        <p>Current quantum computers are still in the experimental stage, with companies like IBM, Google, and D-Wave leading development efforts.</p>
+                    `,
+                    followUp: [
+                        "How is quantum computing different from classical computing?",
+                        "What are the challenges in quantum computing?",
+                        "When will quantum computers be available to the public?",
+                        "How will quantum computing affect encryption?"
+                    ]
+                };
+            }
             
-            // Show typing indicator
-            showAITyping();
+            if (lowerQuery.includes('vpn') || lowerQuery.includes('virtual private network')) {
+                return {
+                    content: `
+                        <p>A VPN (Virtual Private Network) creates a secure, encrypted connection between your device and the internet. Key benefits include:</p>
+                        
+                        <ul>
+                            <li><strong>Privacy Protection:</strong> Hides your IP address and location</li>
+                            <li><strong>Security:</strong> Encrypts your internet traffic, especially on public WiFi</li>
+                            <li><strong>Access to Restricted Content:</strong> Allows access to region-locked websites and services</li>
+                            <li><strong>Bypass Censorship:</strong> Helps access the open internet in restrictive regions</li>
+                        </ul>
+                        
+                        <p>When choosing a VPN, consider these factors:</p>
+                        
+                        <ol>
+                            <li><strong>No-logs policy:</strong> Ensure the provider doesn't keep records of your activity</li>
+                            <li><strong>Encryption strength:</strong> Look for AES-256 encryption</li>
+                            <li><strong>Server locations:</strong> More locations provide more flexibility</li>
+                            <li><strong>Connection speed:</strong> Important for streaming and downloading</li>
+                            <li><strong>Device compatibility:</strong> Should work with all your devices</li>
+                        </ol>
+                        
+                        <p>While VPNs enhance privacy, they don't make you completely anonymous online. Always combine with other privacy tools for maximum protection.</p>
+                    `,
+                    followUp: [
+                        "Are free VPNs safe to use?",
+                        "How does a VPN protect me on public WiFi?",
+                        "Can VPNs be detected and blocked?",
+                        "What's the difference between VPN and Tor?"
+                    ]
+                };
+            }
             
-            // Simulate AI response after delay
-            setTimeout(() => {
-                hideAITyping();
-                const aiResponse = generateAIResponse(message);
-                addAIMessage(aiResponse, 'ai');
-                
-                // Scroll to bottom
-                const chatContainer = document.getElementById('ai-chat');
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 1500);
+            // Default response
+            return {
+                content: `
+                    <p>I'm your MineFamily AI assistant. I can help you find information, answer questions, and provide insights while respecting your privacy.</p>
+                    
+                    <p>Based on your query <strong>"${query}"</strong>, here's what I can tell you:</p>
+                    
+                    <ul>
+                        <li>This appears to be a general information request</li>
+                        <li>I can provide a detailed explanation on this topic</li>
+                        <li>I can suggest related topics you might find interesting</li>
+                        <li>I can perform research and summarize key points</li>
+                    </ul>
+                    
+                    <p>To get the most accurate response, try making your question more specific. For example:</p>
+                    
+                    <ul>
+                        <li>"Explain how ${query} works"</li>
+                        <li>"What are the benefits of ${query}"</li>
+                        <li>"Compare ${query} with similar technologies"</li>
+                    </ul>
+                    
+                    <p>I'm here to help with factual information, research assistance, and privacy-related guidance!</p>
+                `,
+                followUp: [
+                    "How does this work?",
+                    "What are the benefits?",
+                    "Are there any privacy concerns?",
+                    "Can you give me a simple explanation?"
+                ]
+            };
         }
         
-        function addAIMessage(content, sender) {
-            const messagesContainer = document.getElementById('ai-messages');
-            const messageElement = document.createElement('div');
-            messageElement.className = `message ${sender}-message`;
+        function displayAIResponse(query) {
+            const aiPanel = document.getElementById('ai-assistant');
+            const response = generateAIResponse(query);
             
-            // Format response with line breaks
-            const formattedContent = content.replace(/\n/g, '<br>');
-            
-            messageElement.innerHTML = `<p>${formattedContent}</p>`;
-            messagesContainer.appendChild(messageElement);
-            
-            // Scroll to bottom
-            const chatContainer = document.getElementById('ai-chat');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-        
-        function showAITyping() {
-            const messagesContainer = document.getElementById('ai-messages');
-            const typingElement = document.createElement('div');
-            typingElement.className = 'message ai-message';
-            typingElement.id = 'ai-typing';
-            typingElement.innerHTML = `
-                <div class="ai-typing">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
+            aiPanel.innerHTML = `
+                <div class="ai-results-header">
+                    <div class="ai-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-title">
+                        AI Response to: ${query}
+                    </div>
+                </div>
+                <div class="ai-response">
+                    <div class="ai-response-content">
+                        ${response.content}
+                    </div>
+                    
+                    <div class="ai-follow-up">
+                        <div class="ai-follow-up-title">Related questions:</div>
+                        <div class="ai-questions">
+                            ${response.followUp.map(q => 
+                                `<button class="ai-question" data-question="${q}">${q}</button>`
+                            ).join('')}
+                        </div>
+                    </div>
                 </div>
             `;
-            messagesContainer.appendChild(typingElement);
             
-            // Scroll to bottom
-            const chatContainer = document.getElementById('ai-chat');
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-        }
-        
-        function hideAITyping() {
-            const typingElement = document.getElementById('ai-typing');
-            if (typingElement) {
-                typingElement.remove();
-            }
-        }
-        
-        function generateAIResponse(message) {
-            const lowerMessage = message.toLowerCase();
+            // Add event listeners to follow-up questions
+            document.querySelectorAll('.ai-question').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const question = this.getAttribute('data-question');
+                    document.getElementById('search-input').value = question;
+                    document.getElementById('search-btn').click();
+                });
+            });
             
-            // Predefined responses based on keywords
-            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-                return "Hello! I'm your MineFamily AI assistant. How can I help you today?";
-            }
-            
-            if (lowerMessage.includes('privacy') || lowerMessage.includes('private')) {
-                return "MineFamily is designed with privacy as a core principle:\n\n• We don't track your searches\n• We don't store your personal information\n• We use encryption to protect your data\n\nYour privacy is our top priority!";
-            }
-            
-            if (lowerMessage.includes('search') && lowerMessage.includes('how')) {
-                return "To search with MineFamily:\n\n1. Type your query in the search box\n2. Press Enter or click the Search button\n3. Browse through the results\n\nYou can also use voice search by clicking the microphone icon!";
-            }
-            
-            if (lowerMessage.includes('feature')) {
-                return "MineFamily offers these key features:\n\n🔍 Private search with no tracking\n🤖 AI assistant for smart answers\n🎨 Dark/light mode options\n🔊 Voice search capability\n🔒 Secure account management\n\nWhat feature would you like to know more about?";
-            }
-            
-            if (lowerMessage.includes('thank')) {
-                return "You're welcome! Is there anything else I can help you with?";
-            }
-            
-            // Default response for unknown queries
-            return `I understand you're asking about "${message}". As an AI assistant focused on privacy and search, I can help you with:\n\n• Privacy protection tips\n• Search techniques\n• How to use MineFamily features\n• Information about online security\n\nCould you clarify your question or ask something related to these topics?`;
+            aiPanel.style.display = 'block';
+            aiActive = true;
+            document.getElementById('ai-assistant-btn').innerHTML = '<i class="fas fa-robot"></i> Hide AI';
         }
         
         // Initialize the application
@@ -1668,19 +1729,11 @@
             });
             
             // Tab switching
-            document.querySelectorAll('.tab-btn').forEach(btn => {
+            document.querySelectorAll('.type-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const tab = this.getAttribute('data-tab');
-                    
-                    // Update active tab button
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // Show active tab content
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    document.getElementById(`${tab}-tab`).classList.add('active');
+                    currentSearchType = this.getAttribute('data-type');
                 });
             });
             
@@ -1741,8 +1794,12 @@
             document.getElementById('search-btn').addEventListener('click', async function() {
                 const query = document.getElementById('search-input').value.trim();
                 if (query) {
-                    const searchData = await searchDuckDuckGo(query);
-                    displayResults(searchData);
+                    if (currentSearchType === 'ai') {
+                        displayAIResponse(query);
+                    } else {
+                        const searchData = await searchDuckDuckGo(query);
+                        displayResults(searchData);
+                    }
                 }
             });
             
@@ -1765,11 +1822,38 @@
             
             // AI Assistant
             document.getElementById('ai-assistant-btn').addEventListener('click', toggleAIAssistant);
-            document.getElementById('ai-send-btn').addEventListener('click', sendAIMessage);
-            document.getElementById('ai-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendAIMessage();
+            
+            // Voice search
+            document.getElementById('voice-search').addEventListener('click', function() {
+                if (!('webkitSpeechRecognition' in window)) {
+                    alert('Voice search is not supported in your browser');
+                    return;
                 }
+                
+                const recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.start();
+                this.classList.add('listening');
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('search-input').value = transcript;
+                    recognition.stop();
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error', event.error);
+                    recognition.stop();
+                };
+                
+                recognition.onend = function() {
+                    document.getElementById('voice-search').classList.remove('listening');
+                    if (document.getElementById('search-input').value) {
+                        document.getElementById('search-btn').click();
+                    }
+                };
             });
             
             // Login form submission
@@ -1890,6 +1974,26 @@
                     alert('Discord login would be implemented here with OAuth');
                 });
             });
+            
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                if (document.body.classList.contains('light-mode')) {
+                    document.body.classList.remove('light-mode');
+                    this.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.add('light-mode');
+                    this.innerHTML = '<i class="fas fa-sun"></i>';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
+            }
             
             // Initialize with home page
             showPage('home');
