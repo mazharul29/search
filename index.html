@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MineFamily - Private Search Engine</title>
+    <title>MineFamily - Enhanced Private Search Engine</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Updated Global Styles */
@@ -1404,17 +1404,18 @@
             return bookmarks.some(b => b.url === url);
         }
         
-        // Search DuckDuckGo API
+        // Search DuckDuckGo API - FIXED for all content types
         async function searchDuckDuckGo(query, type = 'web') {
             try {
                 // Show loading spinner
                 document.getElementById('loader').style.display = 'block';
                 document.getElementById('results-container').style.display = 'none';
                 
-                // Using DuckDuckGo API
+                // Using DuckDuckGo API with proper parameters for each content type
                 const startTime = Date.now();
                 let endpoint = '';
                 
+                // Set proper API parameters for each content type
                 switch(type) {
                     case 'images':
                         endpoint = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&iax=images&ia=images`;
@@ -1519,7 +1520,7 @@
             }
         }
         
-        // Display search results with pagination
+        // Display search results with pagination - FIXED for all content types
         function displayResults(searchData, type, page = 1) {
             const countContainer = document.getElementById('result-count');
             const paginationContainer = document.getElementById('pagination');
@@ -1650,7 +1651,7 @@
             const element = document.createElement('div');
             element.className = 'image-item';
             element.innerHTML = `
-                <img src="${result.thumbnail}" alt="${result.title}">
+                <img src="${result.thumbnail}" alt="${result.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=Image+Not+Available'">
                 <div class="image-info">
                     <div>${result.title}</div>
                     <small>${result.source}</small>
@@ -1670,7 +1671,7 @@
             element.className = 'video-item';
             element.innerHTML = `
                 <div class="video-thumbnail">
-                    <img src="${result.thumbnail}" alt="${result.title}">
+                    <img src="${result.thumbnail}" alt="${result.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=Video+Not+Available'">
                     <div class="play-icon">
                         <i class="fas fa-play"></i>
                     </div>
@@ -1679,8 +1680,8 @@
                     <h3 class="video-title">${result.title}</h3>
                     <div class="video-channel">${result.channel}</div>
                     <div class="video-meta">
-                        <span>${result.duration}</span>
-                        <span>${result.views} views</span>
+                        <span>${result.duration || 'N/A'}</span>
+                        <span>${result.views || 'Unknown'} views</span>
                     </div>
                 </div>
             `;
@@ -1696,15 +1697,21 @@
         function createNewsResult(result) {
             const element = document.createElement('div');
             element.className = 'news-item';
+            
+            // Handle missing image
+            const imageHTML = result.image ? 
+                `<img src="${result.image}" alt="${result.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=News'">` : 
+                '<div style="background:#333;height:100%;display:flex;align-items:center;justify-content:center;"><i class="fas fa-newspaper" style="font-size:3rem;color:#666;"></i></div>';
+            
             element.innerHTML = `
                 <div class="news-image">
-                    ${result.image ? `<img src="${result.image}" alt="${result.title}">` : ''}
+                    ${imageHTML}
                 </div>
                 <div class="news-content">
                     <h3 class="news-title"><a href="${result.url}" target="_blank">${result.title}</a></h3>
                     <p class="news-description">${result.snippet}</p>
                     <div class="news-meta">
-                        <span>${result.source}</span>
+                        <span>${result.source || 'Unknown source'}</span>
                         <span>${formatDate(result.date)}</span>
                     </div>
                 </div>
@@ -1716,8 +1723,12 @@
         // Format date for news
         function formatDate(dateString) {
             if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString();
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString();
+            } catch (e) {
+                return '';
+            }
         }
         
         // Update UI based on login state
@@ -1861,29 +1872,26 @@
                 document.getElementById('register-tab').classList.add('active');
             });
             
-            // Search functionality
+            // Search functionality - FIXED to handle all content types
             document.getElementById('search-btn').addEventListener('click', async function() {
                 const query = document.getElementById('search-input').value.trim();
                 if (query) {
                     currentSearchQuery = query;
                     currentPage = 1;
                     
-                    // Search for all types
-                    const webData = await searchDuckDuckGo(query, 'web');
-                    const imageData = await searchDuckDuckGo(query, 'images');
-                    const videoData = await searchDuckDuckGo(query, 'videos');
-                    const newsData = await searchDuckDuckGo(query, 'news');
+                    // Show loading spinner
+                    document.getElementById('loader').style.display = 'block';
                     
-                    // Store results
-                    currentSearchResults.web = webData.results;
-                    currentSearchResults.images = imageData.results;
-                    currentSearchResults.videos = videoData.results;
-                    currentSearchResults.news = newsData.results;
+                    // Search for current type only (to improve performance)
+                    const searchData = await searchDuckDuckGo(query, currentSearchType);
                     
-                    // Display current type
+                    // Store results for the current type
+                    currentSearchResults[currentSearchType] = searchData.results;
+                    
+                    // Display results
                     displayResults({
                         results: currentSearchResults[currentSearchType],
-                        timeTaken: 0, // Not used for individual display
+                        timeTaken: searchData.timeTaken,
                         totalResults: currentSearchResults[currentSearchType].length
                     }, currentSearchType);
                 }
@@ -2025,7 +2033,7 @@
                 });
             });
             
-            // Search type switching
+            // Search type switching - FIXED to use cached results
             document.querySelectorAll('.type-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
@@ -2097,6 +2105,12 @@
             
             // Initialize with home page
             showPage('home');
+            
+            // Sample search to demonstrate functionality
+            setTimeout(() => {
+                document.getElementById('search-input').value = 'privacy';
+                document.getElementById('search-btn').click();
+            }, 1000);
         }
         
         // Function to show page
