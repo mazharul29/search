@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Advanced universal link bypasser for Linkvertise and other ad-links" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advanced Universal Link Bypasser</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css" />
+  <style>
+    body {
+      background: #f4f7fa;
+      font-family: 'Raleway', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .bypasser-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      color: #EF8354;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    input[type="url"] {
+      width: 100%;
+      padding: 14px 20px;
+      margin-bottom: 15px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    input[type="url"]:focus {
+      border-color: #EF8354;
+      outline: none;
+    }
+    button {
+      background-color: #EF8354;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background-color: #d46a3e;
+    }
+    #output {
+      margin-top: 25px;
+      font-size: 1.1rem;
+      word-break: break-all;
+    }
+    #output a {
+      color: #2D3142;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    #output a:hover {
+      text-decoration: underline;
+    }
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+      margin: 20px auto;
+      display: none;
+    }
+    .alert {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="bypasser-container">
+    <h1>Advanced Universal Link Bypasser</h1>
+    <p>Paste your ad-link below to get the direct target URL.</p>
+    <input type="url" id="inputLink" placeholder="Enter Linkvertise or other ad-link here" required />
+    <button id="bypassBtn">Bypass Link</button>
+    <div class="spinner-border text-warning" role="status" id="loadingSpinner">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div id="output"></div>
+    <div class="alert alert-danger" role="alert" id="errorMsg"></div>
+  </div>
+
+  <script>
+    const inputLink = document.getElementById('inputLink');
+    const bypassBtn = document.getElementById('bypassBtn');
+    const output = document.getElementById('output');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // Utility: sanitize text to prevent XSS
+    function sanitize(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Show error message
+    function showError(message) {
+      errorMsg.textContent = message;
+      errorMsg.style.display = 'block';
+      output.innerHTML = '';
+    }
+
+    // Clear error message
+    function clearError() {
+      errorMsg.style.display = 'none';
+      errorMsg.textContent = '';
+    }
+
+    // Show loading spinner
+    function showLoading() {
+      loadingSpinner.style.display = 'block';
+      bypassBtn.disabled = true;
+      clearError();
+      output.innerHTML = '';
+    }
+
+    // Hide loading spinner
+    function hideLoading() {
+      loadingSpinner.style.display = 'none';
+      bypassBtn.disabled = false;
+    }
+
+    // Base64 decode helper with error handling
+    function safeBase64Decode(str) {
+      try {
+        return atob(str);
+      } catch {
+        return null;
+      }
+    }
+
+    // Main bypass function
+    async function bypassLink(url) {
+      showLoading();
+
+      // Basic validation
+      if (!url || !url.startsWith('http')) {
+        hideLoading();
+        showError('Please enter a valid URL starting with http or https.');
+        return;
+      }
+
+      // Block certain URLs (example)
+      if (url.includes('notallowed.com')) {
+        hideLoading();
+        showError('You are not allowed to bypass this link.');
+        return;
+      }
+
+      try {
+        // Handle Linkvertise dynamic base64 encoded links
+        if (url.includes('dynamic/?r=') || url.includes('dynamic?r=')) {
+          // Extract base64 part
+          let base64Part = '';
+          if (url.includes('dynamic/?r=')) {
+            base64Part = url.split('dynamic/?r=')[1];
+          } else {
+            base64Part = url.split('dynamic?r=')[1];
+          }
+          // Remove any trailing parameters
+          base64Part = base64Part.split('&')[0];
+          const decoded = safeBase64Decode(base64Part);
+          if (decoded) {
+            output.innerHTML = `Direct Link: <a href="${sanitize(decoded)}" target="_blank" rel="noopener noreferrer">${sanitize(decoded)}</a>`;
+          } else {
+            showError('Failed to decode the link.');
+          }
+          hideLoading();
+          return;
+        }
+
+        // For other links, try external universal bypass API
+        // Using bypass.bot.nu API as example
+        const apiUrl = `https://bypass.bot.nu/bypass2?url=${encodeURIComponent(url)}`;
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error('Failed to fetch bypass API.');
+        }
+        const data = await response.json();
+
+        if (data.success && data.destination) {
+          output.innerHTML = `Direct Link: <a href="${sanitize(data.destination)}" target="_blank" rel="noopener noreferrer">${sanitize(data.destination)}</a>`;
+        } else {
+          showError('Could not bypass the provided link.');
+        }
+      } catch (err) {
+        showError('An error occurred: ' + err.message);
+      } finally {
+        hideLoading();
+      }
+    }
+
+    bypassBtn.addEventListener('click', () => {
+      const url = inputLink.value.trim();
+      bypassLink(url);
+    });
+
+    // Optional: allow Enter key to trigger bypass
+    inputLink.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        bypassBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
